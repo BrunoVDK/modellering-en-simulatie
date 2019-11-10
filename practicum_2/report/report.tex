@@ -1,0 +1,89 @@
+\documentclass{res/theme}
+\usepackage{wallpaper}
+\usepackage{tabu,longtable,booktabs,array}
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+\newcommand{\block}[1]{\vspace{1.4cm}\begin{changemargin}{2.5cm}{2.5cm}\large\textit{#1}\end{changemargin}\vspace{0.6cm}}
+\newcommand{\fakesection}[1]{%
+  \par\refstepcounter{section}% Increase section counter
+  \sectionmark{#1}% Add section mark (header)
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}% Add section to ToC
+  % Add more content here, if needed.
+}
+\ThisCenterWallPaper{0.7}{res/cover.png}
+\usepackage{microtype} % Better word wrapping
+  \usepackage{color}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\definecolor{blue}{rgb}{0.01, 0.28, 1.0}
+\definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
+\hypersetup{colorlinks=true, urlcolor=blue, citecolor=blue, filecolor=blue, linkcolor=blue}
+\usepackage{afterpage}
+\pagecolor{lightgray}\afterpage{\nopagecolor}
+\usepackage[firstpage=true]{background}
+\def\Step{0.1cm}
+\tikzset{dotted lines/.style={black, loosely dotted,  thick}}
+\backgroundsetup{
+scale=1,
+angle=0,
+position={0,0},
+contents={
+\begin{tikzpicture}[remember picture,overlay]
+\draw[dotted lines,step=\Step,help lines]
+  (-10,-30) grid  (20,10);
+  \end{tikzpicture}
+  }
+}
+\usepackage[font={footnotesize}]{caption}
+\usepackage[ruled,vlined]{algorithm2e}
+\newenvironment{snippet}[1][htb]
+  {\renewcommand{\algorithmcfname}{Code Snippet}% Update algorithm name
+   \vspace{0.3cm}\begin{algorithm}[#1]%
+  }{\end{algorithm}\vspace{0.3cm}}
+\usepackage{array}
+\usepackage{tabu}
+\usepackage{float}
+\usepackage[all]{hypcap}
+\usepackage{etoolbox}
+\usepackage{xfrac}
+\usepackage{fancyvrb}
+\makeatletter
+\patchcmd{\@BVerbatim}
+  {\BVerbatim@font}
+  {\BVerbatim@font\footnotesize}
+  {}{}
+\makeatother
+
+%%% Authors
+\addAuthor{Bruno}{Vandekerkhove}{}
+
+%%% Title page
+\casename{Practicum 2 - }
+\subtitle{Bruno Vandekerkhove}
+\course{{G0Q57A: Modellering \& Simulatie}}
+\academicyear{2019}
+\newcommand{\tbd}{\textbf{To be discussed}}
+
+%%%
+%%% Start Document
+%%%
+\begin{document}
+\maketitle
+\tableofcontents
+
+% 
+% References
+%
+%\bibliographystyle{plain}
+%\bibliography{references}
+%\addcontentsline{toc}{section}{Bronnen}
+
+%
+% Evaluatie
+%
+
+\newpage
+\appendix
+\input{evaluatie}
+
+\end{document}
