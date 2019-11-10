@@ -21,12 +21,12 @@
 %% 2005/12/01 or later.
 %% 
 \NeedsTeXFormat{LaTeX2e}[2013/03/31]
-\ProvidesClass{misc/sareport}[]
+\ProvidesClass{misc/theme}[]
 \RequirePackage{ifthen}
 \newboolean{anonymize}
 \DeclareOption{peerreview}{\setboolean{anonymize}{true}}
 \PassOptionsToClass{10pt,a4paper}{article}
-\PassOptionsToPackage{english}{babel}
+\PassOptionsToPackage{dutch}{babel}
 \PassOptionsToPackage{utf8}{inputenc}
 \PassOptionsToPackage{T1}{fontenc}
 \PassOptionsToPackage{a4paper}{geometry}
@@ -36,6 +36,10 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 \ProcessOptions\relax
 \LoadClass{article}
+\usepackage[numbered,autolinebreaks,useliterate]{mcode}
+\lstset{xleftmargin=.25in} 
+%\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+%\usepackage[cachedir=minted]{minted}
 \RequirePackage{babel}
 \RequirePackage{inputenc}
 \RequirePackage{fontenc}
@@ -46,17 +50,17 @@
 \RequirePackage{expl3}
 \RequirePackage{enumitem}
 \RequirePackage{minitoc}
-\IfFileExists{fontawesome.sty}{%
-    \RequirePackage{fontawesome}
-}{%
-    \ClassWarning{theme}{You do not have fontawesome.sty available.
-    \MessageBreak You are recommended to upgrade your LaTeX distribution.
-    }
-    \newcommand{\faExclamationTriangle}{!}
-    \newcommand{\faInfoCircle}{?}
-    \newcommand{\faCheck}{v}
-    \newcommand{\faClipboard}{}
-}
+%\IfFileExists{fontawesome.sty}{%
+%    \RequirePackage{fontawesome}
+%}{%
+%    \ClassWarning{theme}{You do not have fontawesome.sty available.
+%    \MessageBreak You are recommended to upgrade your LaTeX distribution.
+%    }
+%    \newcommand{\faExclamationTriangle}{!}
+%    \newcommand{\faInfoCircle}{?}
+%    \newcommand{\faCheck}{v}
+%    \newcommand{\faClipboard}{}
+%}
 \RequirePackage{advdate}
 \RequirePackage{pdftexcmds,xparse}
 \RequirePackage{totcount}
@@ -481,7 +485,7 @@
         \begin{center}
             \begin{minipage}[t]{\textwidth}
                 \begin{center}
-                    {\LARGE {\rmfamily \bfseries \the\casename}\\
+                    {\huge {\rmfamily \the\casename}\\
                     {\Large \the\subtitle}\\
                   }%  \the\phasename\\}
                     \vspace{0.5cm}

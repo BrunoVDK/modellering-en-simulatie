@@ -1,5 +1,8 @@
 *.DS_Store
 
+/practicum_1/report/minted/*
+/practicum_2/report/minted/*
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

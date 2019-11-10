@@ -1,19 +1,21 @@
 \documentclass{res/theme}
 \usepackage{wallpaper}
+\usepackage[dutch]{babel}
 \usepackage{tabu,longtable,booktabs,array}
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
 \let\endchangemargin=\endlist 
 \newcommand{\block}[1]{\vspace{1.4cm}\begin{changemargin}{2.5cm}{2.5cm}\large\textit{#1}\end{changemargin}\vspace{0.6cm}}
-\newcommand{\fakesection}[1]{%
-  \par\refstepcounter{section}% Increase section counter
-  \sectionmark{#1}% Add section mark (header)
-  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}% Add section to ToC
-  % Add more content here, if needed.
-}
 \ThisCenterWallPaper{0.7}{res/cover.png}
 \usepackage{microtype} % Better word wrapping
   \usepackage{color}
 \usepackage{xcolor}
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\Large}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large}
+  {\thesection}{1em}{}
 \usepackage{hyperref}
 \definecolor{blue}{rgb}{0.01, 0.28, 1.0}
 \definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
@@ -47,6 +49,7 @@ contents={
 \usepackage{etoolbox}
 \usepackage{xfrac}
 \usepackage{fancyvrb}
+\usepackage{listings}
 \makeatletter
 \patchcmd{\@BVerbatim}
   {\BVerbatim@font}
@@ -54,11 +57,15 @@ contents={
   {}{}
 \makeatother
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%% Authors
 \addAuthor{Bruno}{Vandekerkhove}{}
 
 %%% Title page
-\casename{Practicum 2 - }
+\casename{Practicum 2 - TBA}
 \subtitle{Bruno Vandekerkhove}
 \course{{G0Q57A: Modellering \& Simulatie}}
 \academicyear{2019}
@@ -74,9 +81,9 @@ contents={
 % 
 % References
 %
-%\bibliographystyle{plain}
-%\bibliography{references}
-%\addcontentsline{toc}{section}{Bronnen}
+\bibliographystyle{plain}
+\bibliography{references}
+\addcontentsline{toc}{section}{Bronnen}
 
 %
 % Evaluatie
