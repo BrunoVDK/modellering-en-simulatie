@@ -1,5 +1,9 @@
 \fakesection{Een Aanbevelingssysteem voor Films}
 
+\begin{center}
+\textit{De broncode bevindt zich in de \texttt{src} folder. Het algemene script (\texttt{src/s0216676\_script}) is opgedeeld in secties, \'e\'en per opgave. De afzonderlijke opgaven worden hieronder beantwoord. Aan het einde van elk antwoord wordt (indien nodig) de broncode weergegeven.}
+\end{center}
+
 %%%
 %%%
 %%%
@@ -31,9 +35,9 @@ spy(T(1:1000,1:1000))
 
 \fakesubsection{Opdracht 2}
 
-De volle matrix \texttt{full(R)} neemt 220388224 bytes ($\approx 210$MB) in beslag. Voor de ijle matrix \texttt{sparse(R)} lijkt het op het eerste gezicht 18525728 bytes ($< 18$MB) te zijn. MatLab verbruikt echter iets meer dan dat. Als men de juiste formule gebruikt voor het geheugenverbruik van ijle matrices \footnote{\textit{\texttt{MATLAB} gebruikt het \texttt{CSC} formaat voor ijle matrices : ``Even though \texttt{MATLAB} is written in \texttt{C}, it follows its \texttt{LINPACK} and \texttt{Fortran} predecessors and stores full matrices by columns. This organization has been carried over to sparse matrices. A sparse matrix is stored as the concatenation of the sparse vectors representing its columns. Each sparse vector consists of a floating point array of nonzero entries (or two such arrays for complex matrices), together with an integer array of row indices. A second integer array gives the locations in the other arrays of the first element in each column. Consequently, the storage requirement for an $m\times n$ reals parse matrix with $nnz$ nonzero entries is $nnz$ reals and $nnz+n$ integers. On typical machines with 8-byte reals and 4-byte integers, this is $12nnz+4n$ bytes.''} \cite{Gilbert1992}} :
+Stel dat gehele getallen 4 - en re\"ele getallen 8 bytes innemen. De volle matrix \texttt{full(R)} zou dan 220388224 bytes ($\approx 210$MB) in beslag nemen ; 1 re\"eel getal per element. Voor de ijle matrix \texttt{sparse(R)} lijkt het op het eerste gezicht 18525728 bytes ($< 18$MB) te zijn ; 2 gehele getallen en 1 re\"eel getal per element dat niet nul is. MatLab verbruikt echter iets meer dan dat. Als men de juiste formule toepast voor het geheugenverbruik van ijle matrices \footnote{\textit{\texttt{MATLAB} gebruikt het \texttt{CSC} formaat voor ijle matrices : ``Even though \texttt{MATLAB} is written in \texttt{C}, it follows its \texttt{LINPACK} and \texttt{Fortran} predecessors and stores full matrices by columns. This organization has been carried over to sparse matrices. A sparse matrix is stored as the concatenation of the sparse vectors representing its columns. Each sparse vector consists of a floating point array of nonzero entries (or two such arrays for complex matrices), together with an integer array of row indices. A second integer array gives the locations in the other arrays of the first element in each column. Consequently, the storage requirement for an $m\times n$ reals parse matrix with $nnz$ nonzero entries is $nnz$ reals and $nnz+n$ integers. On typical machines with 8-byte reals and 4-byte integers, this is $12nnz+4n$ bytes.''} \cite{Gilbert1992}} :
 $$12\times nnz+4\times n$$
-Dan komt men uit op bijna 14 miljoen bytes. Op mijn computer was het totaal meer dan 18,6 miljoen omdat gehele getallen 8 bytes innemen.
+dan komt men uit op bijna 14 miljoen bytes. Op mijn computer was het totaal meer dan 18,6 miljoen omdat gehele getallen daar met 8 bytes worden voorgesteld.
 
 \begin{figure}[h]
 \centering
@@ -78,7 +82,12 @@ legend('Ijle R', 'Benadering', 'Location', 'northeast')
 
 \fakesubsection{Opdracht 3}
 
-
+Men weet dat $A=\sum_{i=1}^r \sigma_iu_iv_i^T$. Het iteratief algoritme gaat bij elke stap $\sigma_j$, $u_j$ en $v_j$ bepalen zodat de Frobeniusnorm van $E_{j-1}-\sigma_ju_jv_j^T$ (de nieuwe $E_j$) minimaal is. Dit komt overeen met het bepalen van een afgeknotte singulierewaardenontbinding van graad 1. De $\sigma_j$ dient daarbij de grootste singuliere waarde van $E_{j-1}$ te zijn. Stel $j = 0$, dan :
+$$E_1=E_0-\sigma_ju_jv_j^T=A-\sigma_ju_jv_j^T=\sum_{i=1}^r \sigma_iu_iv_i^T-\sigma_ju_jv_j^T = \sum_{i=2}^{r} \sigma_iu_iv_i^T$$
+Na een aantal iteraties bekomt men analoog (voor $k<r$) :
+$$E_k=\sum_{i=k+1}^{r} \sigma_iu_iv_i^T$$
+Berekent men dan $A-E_k$, dan bekomt men het gevraagde :
+$$A-E_k = \sum_{i=1}^{r} \sigma_iu_iv_i^T-\sum_{i=k+1}^{r} \sigma_iu_iv_i^T=\sum_{i=1}^{k} \sigma_iu_iv_i^T$$
 
 %%%
 %%%

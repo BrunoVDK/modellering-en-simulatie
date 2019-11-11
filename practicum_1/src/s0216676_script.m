@@ -1,7 +1,7 @@
-%%
-% Opdracht 1
 set(0, 'defaultFigurePosition', get(0, 'Screensize')); % Figuren vullen scherm
 load('MovieLens_Subset.mat');
+%%
+% Opdracht 1
 subplot(1,2,1)
 spy(R(1:1000,1:1000))
 subplot(1,2,2)
@@ -37,3 +37,12 @@ ylabel('Geheugenverbruik')
 legend('Ijle R', 'Benadering', 'Location', 'northeast') 
 %%
 % Opdracht 3
+
+
+
+
+
+
+
+
+
