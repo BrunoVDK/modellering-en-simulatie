@@ -84,9 +84,9 @@ legend('Ijle R', 'Benadering', 'Location', 'northeast')
 
 Men weet dat $A=\sum_{i=1}^r \sigma_iu_iv_i^T$. Het iteratief algoritme gaat bij elke stap $\sigma_j$, $u_j$ en $v_j$ bepalen zodat de Frobeniusnorm van $E_{j-1}-\sigma_ju_jv_j^T$ (de nieuwe $E_j$) minimaal is. Dit komt overeen met het bepalen van een afgeknotte singulierewaardenontbinding van graad 1. De $\sigma_j$ dient daarbij de grootste singuliere waarde van $E_{j-1}$ te zijn. Stel $j = 0$, dan :
 $$E_1=E_0-\sigma_ju_jv_j^T=A-\sigma_ju_jv_j^T=\sum_{i=1}^r \sigma_iu_iv_i^T-\sigma_ju_jv_j^T = \sum_{i=2}^{r} \sigma_iu_iv_i^T$$
-Na een aantal iteraties bekomt men analoog (voor $k<r$) :
+Na een aantal iteraties bekomt men uiteindelijk :
 $$E_k=\sum_{i=k+1}^{r} \sigma_iu_iv_i^T$$
-Berekent men dan $A-E_k$, dan bekomt men het gevraagde :
+Berekent men ten slotte $A-E_k$, dan bekomt men het gevraagde :
 $$A-E_k = \sum_{i=1}^{r} \sigma_iu_iv_i^T-\sum_{i=k+1}^{r} \sigma_iu_iv_i^T=\sum_{i=1}^{k} \sigma_iu_iv_i^T$$
 
 %%%
@@ -95,11 +95,34 @@ $$A-E_k = \sum_{i=1}^{r} \sigma_iu_iv_i^T-\sum_{i=k+1}^{r} \sigma_iu_iv_i^T=\sum
 
 \fakesubsection{Opdracht 4}
 
+Gezien mijn studentennummer $s0216676$ is, is $c$ gelijk aan $6$. Met $sizeof(double)=8$ zal stap 4 een totaal aan $8*(m+n+1)+8*m*n+4$ bytes nodig hebben. Voor stap 5 krijgt men te maken met de matrix $E$ die maar \'e\'en keer wordt gealloceerd en $8*n*m$ bytes nodig heeft. Stap 6 verbruikt $4$ bytes (voor het geheel getal). Het aantal keren dat men de stappen uitvoert maakt niet uit.\\
 
+\par\noindent Men heeft dus te maken met $((280000+58000+1)*8+(280000*58000*8)+4)/1024^3\approx 120$ GB wat op zich al meer is dan het optimistische $8+2+(c+1)^2=8+2+49=59$ GB.  Als men met ijle matrices blijft werken kan hier iets aan gedaan worden.
 
 %%%
 %%%
 %%%
 
 \fakesubsection{Opdracht 5}
+
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 6}
+
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 7}
+
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 8}
 

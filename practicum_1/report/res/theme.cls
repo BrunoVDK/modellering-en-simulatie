@@ -75,7 +75,8 @@
 \newcommand{\fakesubsection}[1]{
 	\subsection*{#1}
 	\par\refstepcounter{subsection}
-	\addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}#1}
+	\addcontentsline{toc}{subsection}{#1}
+	%\addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}#1}
 }
 
 
