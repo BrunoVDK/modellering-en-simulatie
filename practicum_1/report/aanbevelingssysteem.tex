@@ -82,11 +82,17 @@ legend('Ijle R', 'Benadering', 'Location', 'northeast')
 
 \fakesubsection{Opdracht 3}
 
-Men weet dat $A=\sum_{i=1}^r \sigma_iu_iv_i^T$. Het iteratief algoritme gaat bij elke stap $\sigma_j$, $u_j$ en $v_j$ bepalen zodat de Frobeniusnorm van $E_{j-1}-\sigma_ju_jv_j^T$ (de nieuwe $E_j$) minimaal is. Dit komt overeen met het bepalen van een afgeknotte singulierewaardenontbinding van graad 1. De $\sigma_j$ dient daarbij de grootste singuliere waarde van $E_{j-1}$ te zijn. Stel $j = 0$, dan :
+Men weet dat 
+\begin{equation} \label{eq:1}
+A=\sum_{i=1}^r \sigma_iu_iv_i^T \qquad
+\end{equation}
+Het iteratief algoritme gaat bij elke stap $\sigma_j$, $u_j$ en $v_j$ bepalen zodat de Frobeniusnorm van $E_{j-1}-\sigma_ju_jv_j^T$ (de nieuwe $E_j$) minimaal is. Dit komt overeen met het bepalen van een afgeknotte singulierewaardenontbinding van graad 1. De $\sigma_j$ dient daarbij de grootste singuliere waarde van $E_{j-1}$ te zijn. Stel $j = 0$, dan :
 $$E_1=E_0-\sigma_ju_jv_j^T=A-\sigma_ju_jv_j^T=\sum_{i=1}^r \sigma_iu_iv_i^T-\sigma_ju_jv_j^T = \sum_{i=2}^{r} \sigma_iu_iv_i^T$$
 Na een aantal iteraties bekomt men uiteindelijk :
 $$E_k=\sum_{i=k+1}^{r} \sigma_iu_iv_i^T$$
-Berekent men ten slotte $A-E_k$, dan bekomt men het gevraagde :
+Want telkens wordt er een afgeknotte singulierewaardenontbinding bepaald van rang 1 zodat de term horende bij de grootste singuliere waarde keer op keer verdwijnt na aftrekking, totdat de laatste $r-k$ termen overblijven. 
+Men kan opmerken dat dit niet verreist dat de $u_j$ en $v_j$ bekomen in stap 4 overeenstemmen met de $u_i$ en $v_i$ in (\ref{eq:1}). Het teken van $u_j$ en $v_j$ kan bijvoorbeeld verschillen.\\
+\par\noindent Berekent men ten slotte $A-E_k$ dan bekomt men het gevraagde :
 $$A-E_k = \sum_{i=1}^{r} \sigma_iu_iv_i^T-\sum_{i=k+1}^{r} \sigma_iu_iv_i^T=\sum_{i=1}^{k} \sigma_iu_iv_i^T$$
 
 %%%
@@ -95,9 +101,9 @@ $$A-E_k = \sum_{i=1}^{r} \sigma_iu_iv_i^T-\sum_{i=k+1}^{r} \sigma_iu_iv_i^T=\sum
 
 \fakesubsection{Opdracht 4}
 
-Gezien mijn studentennummer $s0216676$ is, is $c$ gelijk aan $6$. Met $sizeof(double)=8$ zal stap 4 een totaal aan $8*(m+n+1)+8*m*n+4$ bytes nodig hebben. Voor stap 5 krijgt men te maken met de matrix $E$ die maar \'e\'en keer wordt gealloceerd en $8*n*m$ bytes nodig heeft. Stap 6 verbruikt $4$ bytes (voor het geheel getal). Het aantal keren dat men de stappen uitvoert maakt niet uit.\\
+Gezien mijn studentennummer $s0216676$ is, is $c$ gelijk aan $6$. Met $sizeof(double)=8$ zal stap 4 een totaal aan $8*(m+n+1)$ bytes nodig hebben. Voor stap 5 krijgt men te maken met de matrix $E$ die maar \'e\'en keer wordt gealloceerd en $8*n*m$ bytes nodig heeft. Stap 6 verbruikt $4$ bytes (voor het geheel getal). Het aantal keren dat men de stappen uitvoert maakt niet uit.\\
 
-\par\noindent Men heeft dus te maken met $((280000+58000+1)*8+(280000*58000*8)+4)/1024^3\approx 120$ GB wat op zich al meer is dan het optimistische $8+2+(c+1)^2=8+2+49=59$ GB.  Als men met ijle matrices blijft werken kan hier iets aan gedaan worden.
+\par\noindent Men heeft dus te maken met $((280000+58000+1)*8+(280000*58000*8)+4)/1024^3\approx 120$ GB wat op zich al meer is dan het optimistische $8+2+(c+1)^2=8+2+49=59$ GB.  Als men met ijle voorstellingen blijft werken kan hier iets aan gedaan worden.
 
 %%%
 %%%
@@ -105,6 +111,17 @@ Gezien mijn studentennummer $s0216676$ is, is $c$ gelijk aan $6$. Met $sizeof(do
 
 \fakesubsection{Opdracht 5}
 
+De drie vectoren \texttt{[i,j,x]} die teruggegeven worden door \texttt{find(A)} verbruiken elk $\mathcal{O}(\zeta)$ geheugen. In de implementatie van de functie \texttt{s0216676\_sparseModel} wordt \texttt{[x]} z\'elf hergebruikt om de resultaten van de lineaire operator $P_{\Omega}(X)$ op te slaan. Elk element $x_{ij}$ is gelijk aan de vermenigvuldiging van rij $i$ van de matrix $Uk*diag(sk)$ en kolom $j$ van $Vk^T$. Het volstaat dus elementsgewijs te vermenigvuldigen van rij $i$ van $Uk$ met $sk^T$ en dit te vermenigvuldigen met de getransponeerde rij $j$ van $Vk$.
+
+\begin{lstlisting}
+function [P] = s0216676_sparseModel(Uk,sk,Vk,A)
+    [i,j,x] = find(A);
+    for idx = 1:nnz(A)
+        x(idx) = Uk(i(idx),:) .* sk' * Vk(j(idx),:)';
+    end
+    P = sparse(i, j, x);
+end
+\end{lstlisting}
 
 %%%
 %%%

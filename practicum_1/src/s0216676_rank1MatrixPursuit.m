@@ -1,4 +1,4 @@
-function [U,s,V,rmse] = SN_rank1MatrixPursuit(R,k,T)
+function [U,s,V,rmse] = s0216676_rank1MatrixPursuit(R,k,T)
   [m, n] = size(R);
   rmse = zeros(k,1);
   U = zeros(m,k);

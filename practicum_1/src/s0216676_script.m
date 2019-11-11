@@ -36,8 +36,12 @@ xlabel('r')
 ylabel('Geheugenverbruik')
 legend('Ijle R', 'Benadering', 'Location', 'northeast') 
 %%
-% Opdracht 3
-
+% Opdracht 5
+A = sprand(4, 4, 1);
+disp(A);
+[Uk, sk, Vk] = svds(A);
+X = s0216676_sparseModel(Uk, diag(sk), Vk, A);
+disp(X);
 
 
 
