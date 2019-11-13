@@ -41,7 +41,7 @@ dan komt men uit op bijna 14 miljoen bytes. Op mijn computer was het totaal meer
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth]{res/op2.png}
+\includegraphics[width=0.3\textwidth]{res/op2.png}
 \caption{Geheugenverbruik voor ijle matrix $R$ en lagerangsbenadering. Het snijpunt bevindt zich in $r\approx 119$.}
 \label{fig:op2}
 \end{figure}
@@ -90,7 +90,7 @@ Het iteratief algoritme gaat bij elke stap $\sigma_j$, $u_j$ en $v_j$ bepalen zo
 $$E_1=E_0-\sigma_ju_jv_j^T=A-\sigma_ju_jv_j^T=\sum_{i=1}^r \sigma_iu_iv_i^T-\sigma_ju_jv_j^T = \sum_{i=2}^{r} \sigma_iu_iv_i^T$$
 Na een aantal iteraties bekomt men uiteindelijk :
 $$E_k=\sum_{i=k+1}^{r} \sigma_iu_iv_i^T$$
-Want telkens wordt er een afgeknotte singulierewaardenontbinding bepaald van rang 1 zodat de term horende bij de grootste singuliere waarde keer op keer verdwijnt na aftrekking, totdat de laatste $r-k$ termen overblijven. 
+Want telkens wordt er een afgeknotte singulierewaardenontbinding bepaald van rang 1 en die komt overeen met de term horende bij de grootste singuliere waarde zodat deze term keer op keer verdwijnt na aftrekking. Totdat de laatste $r-k$ termen overblijven. 
 Men kan opmerken dat dit niet verreist dat de $u_j$ en $v_j$ bekomen in stap 4 overeenstemmen met de $u_i$ en $v_i$ in (\ref{eq:1}). Het teken van $u_j$ en $v_j$ kan bijvoorbeeld verschillen.\\
 \par\noindent Berekent men ten slotte $A-E_k$ dan bekomt men het gevraagde :
 $$A-E_k = \sum_{i=1}^{r} \sigma_iu_iv_i^T-\sum_{i=k+1}^{r} \sigma_iu_iv_i^T=\sum_{i=1}^{k} \sigma_iu_iv_i^T$$
@@ -129,6 +129,15 @@ end
 
 \fakesubsection{Opdracht 6}
 
+TE VRAGEN AAN ASSISTENT
+\begin{lstlisting}
+k = 15;
+nonzero = nnz(R);
+[i,~] = find(R(:));
+j = repmat(1:k, nonzero, 1);
+B = sparse(repmat(i, k, 1), j(:), ones(nonzero * k, 1), m * n, k, k * nonzero);
+spy(B(1:500,:))
+\end{lstlisting}
 
 %%%
 %%%
@@ -136,6 +145,43 @@ end
 
 \fakesubsection{Opdracht 7}
 
+Door op voorhand $\mathcal{O}(\zeta)$ aan geheugen vrij te maken en dan stap voor stap de kolommen van B aan te vullen met de resultaten van de \texttt{sparseModel} functie (die op zijn beurt $\mathcal{O}(\zeta)$ geheugen gebruikt) blijft het geheugengebruik binnen de opgelegde limiet.
+
+\begin{lstlisting}
+function [s] = s0216676_optimalCoefficients(Uk,Vk,A)
+    nonzero = nnz(A);
+    [m,k] = size(Uk);
+    [n,~] = size(Vk);
+    B = sparse([], [], [], m * n, k, k * nonzero); % Allocate space
+    for j = 1:k
+        temp = s0216676_sparseModel(Uk(:,j), 1, Vk(:,j), A);
+        B(:,j) = temp(:); %#ok
+    end
+    s = lsqr(B, A(:));
+end
+\end{lstlisting}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 8}
+
+Om de gemiddelde beoordeling per gebruiker te bekomen wordt de som van al diens beoordelingen genomen en gedeeld door het aantal beoordelingen dat niet nul is. Vervolgens wordt de bekomen ijle vector omgevormd tot een volle kolomvector.
+
+\begin{lstlisting}
+function [mu] = s0216676_userMeans(A)
+    mu = full(sum(A, 1) ./ sum(A ~= 0))'
+end
+\end{lstlisting}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 9}
+
+Er zijn \mcode{length(mu(mu == 5))} (= 13) gebruikers die een gemiddelde beoordeling hebben van 5. De laagste drie gemiddeldes bedrage 0.5100, 0.5727 en 0.8983 (\mcode{sort(mu) ; ans(1:3)}).
 
 %%%
 %%%

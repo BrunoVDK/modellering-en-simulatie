@@ -42,10 +42,20 @@ disp(A);
 [Uk, sk, Vk] = svds(A);
 X = s0216676_sparseModel(Uk, diag(sk), Vk, A);
 disp(X);
-
-
-
-
+%%
+% Opdracht 6
+k = 15;
+nonzero = nnz(R);
+[i,~] = find(R(:));
+j = repmat(1:k, nonzero, 1);
+B = sparse(repmat(i, k, 1), j(:), ones(nonzero * k, 1), m * n, k, k * nonzero);
+spy(B(1:500,:))
+%%
+% Opdracht 7
+tic
+[U,S,V] = svds(R);
+s0216676_optimalCoefficients(U,V,R)
+toc
 
 
 
