@@ -56,7 +56,13 @@ tic
 [U,S,V] = svds(R);
 s0216676_optimalCoefficients(U,V,R)
 toc
-
-
+%%
+% Opdracht 10
+% Little test with the example data in the assignment
+R = [0 0 3.5 3.0 0 3.0 0 0 0 3.0 0 ; 2.5 0 4.0 0 0 0 0 0 5.0 2.5 0 ; 2.5 5.0 5.0 5.0 4.0 4.0 0 0.5 4.5 0 3.0 ; 0 0 4.5 0 0 0 3.5 0 0 0 3.5 ; 2.5 0 0 0 0 0 0 0 0 2.5 0];
+[U,s,V,rmse] = s0216676_rank1MatrixPursuit(R,3,R);
+round(U * diag(s) * V', 1) % Should print same matrix as the one in the assignment
+%%
+% Opdracht 12
 
 

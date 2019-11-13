@@ -1,7 +1,7 @@
 \fakesection{Een Aanbevelingssysteem voor Films}
 
 \begin{center}
-\textit{De broncode bevindt zich in de \texttt{src} folder. Het algemene script (\texttt{src/s0216676\_script}) is opgedeeld in secties, \'e\'en per opgave. De afzonderlijke opgaven worden hieronder beantwoord. Aan het einde van elk antwoord wordt (indien nodig) de broncode weergegeven.}
+\textit{De broncode bevindt zich in de \texttt{src} folder. Het algemene script (\texttt{src/s0216676\_script}) is opgedeeld in secties, \'e\'en per opgave. Elke opgave wordt hieronder afzonderlijk beantwoord. Aan het einde van elk antwoord wordt (indien nodig) de broncode weergegeven.}
 \end{center}
 
 %%%
@@ -130,6 +130,7 @@ end
 \fakesubsection{Opdracht 6}
 
 TE VRAGEN AAN ASSISTENT
+
 \begin{lstlisting}
 k = 15;
 nonzero = nnz(R);
@@ -187,5 +188,25 @@ Er zijn \mcode{length(mu(mu == 5))} (= 13) gebruikers die een gemiddelde beoorde
 %%%
 %%%
 
-\fakesubsection{Opdracht 8}
+\fakesubsection{Opdracht 10}
+
+De code voor deze opdracht is eenvoudig :
+
+\begin{lstlisting}
+function [err] = s0216676_RMSE(A,B)
+    err = norm(A-B, 'fro') / sqrt(nnz(A));
+end
+\end{lstlisting}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 11}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 12}
 
