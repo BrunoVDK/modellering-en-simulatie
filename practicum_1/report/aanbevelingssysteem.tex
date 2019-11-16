@@ -366,10 +366,99 @@ De `beste films' worden weergegeven in figuur \ref{fig:op16a} en \ref{fig:op16b}
 
 \fakesubsection{Opdracht 17}
 
+De functie werd als volgt ge\"implementeerd :
+
+\begin{lstlisting}
+function [movieIDs,score] = s0216676_predictedBestMoviesForUser(R,Uk,sk,Vk,j)
+    [m,~] = size(R);
+    indices = setdiff(1:m,find(R))';
+    n = length(indices);
+    score = zeros(n,1);
+    x = sk .* Vk(j,:)';
+    for i = 1:n
+       score(i) = Uk(indices(i),:) * x;
+    end
+    [score,permutation] = sort(score, 'descend');
+    movieIDs = indices(permutation);
+end
+\end{lstlisting}
+
 %%%
 %%%
 %%%
 
 \fakesubsection{Opdracht 18}
+
+De resultaten worden weergegeven in figuur \ref{fig:op18a}, \ref{fig:op18b} en \ref{fig:op18c}.
+
+%\newgeometry{top=1.5cm,bottom=1.5cm}
+%\thispagestyle{empty}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+\textbf{Beste films} & \textbf{Score} \\
+\hline
+    Deadpool (2016)                                   & 5.7072 \\
+    The Hunger Games (2012)                           & 4.9250 \\
+    Star Wars: Episode VII - The Force Awakens (2015) & 4.8234 \\
+    Her (2013)                                        & 4.6669 \\
+    The Hunger Games: Mockingjay - Part 1 (2014)      & 4.5391 \\
+    Black Swan (2010)                                 & 4.4652 \\
+    Perks of Being a Wallflower, The (2012)           & 4.1907 \\
+    Scott Pilgrim vs. the World (2010)                & 4.1496 \\
+    Avengers: Age of Ultron (2015)                    & 4.1399 \\
+    Moonrise Kingdom (2012)                           & 4.0860 
+\end{tabular}
+\caption{Best beoordeelde films voor gebruiker 98 (op basis van voorspellingen).}
+\label{fig:op18a}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+\textbf{Beste films} & \textbf{Score} \\
+\hline
+    Captain America: The Winter Soldier (2014) & 5.4375 \\
+    Deadpool (2016)                            & 5.4323 \\
+    Intouchables (2011)                        & 5.3363 \\
+    Thor: Ragnarok (2017)                      & 5.3028 \\
+    Avengers: Infinity War - Part I (2018)     & 5.2873 \\
+    Doctor Strange (2016)                      & 5.2848 \\
+    Big Hero 6 (2014)                          & 5.2218 \\
+    Logan (2017)                               & 5.1846 \\
+    John Wick (2014)                           & 5.0464 \\
+    Spotlight (2015)                           & 4.9661 
+\end{tabular}
+\caption{Best beoordeelde films voor gebruiker 10100 (op basis van voorspellingen).}
+\label{fig:op18b}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+\textbf{Beste films} & \textbf{Score} \\
+\hline
+How to Train Your Dragon (2010)             & 5.0000 \\
+The Hunger Games (2012)                     & 5.0000 \\
+Dark Knight Rises, The (2012)               & 5.0000 \\
+Pitch Perfect (2012)                        & 5.0000 \\
+Hobbit: An Unexpected Journey, The (2012)   & 5.0000 \\
+Way, Way Back, The (2013)                   & 5.0000 \\
+Short Term 12 (2013)                        & 5.0000 \\
+Thor: The Dark World (2013)                 & 5.0000 \\
+Wolf of Wall Street, The (2013)             & 5.0000 \\
+How to Train Your Dragon 2 (2014)           & 5.0000 \\
+The Hunger Games: Mockingjay - Part 1 (2014)& 5.0000 \\
+Deadpool (2016)                             & 5.0000 \\
+Guardians of the Galaxy 2 (2017)            & 5.0000 \\
+Sherlock: The Abominable Bride (2016)       & 5.0000 \\
+Kubo and the Two Strings (2016)             & 5.0000
+\end{tabular}
+\caption{Best beoordeelde films voor gebruiker 98 (op basis van testmatrix $T$).}
+\label{fig:op18c}
+\end{table}
+
+\noindent Voor gebruiker 10100 worden voornamelijk Marvel films aangeraden. Voor gebruiker 98 komen 3 aanbevelingen overeen met diens hoogst-beoordeelde films (in matrix $T$, niet in matrix $R$). De andere films hebben een gelijkaardig genre, dus is wat aangeraden wordt best ok\'e.
 
 

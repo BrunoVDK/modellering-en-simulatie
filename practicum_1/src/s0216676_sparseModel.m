@@ -5,4 +5,3 @@ function [P] = s0216676_sparseModel(Uk,sk,Vk,A)
     end
     P = sparse(i, j, x);
 end
-

@@ -86,14 +86,25 @@ fprintf("Score : %.2f\n", score)
 fprintf("IDs : %i\n", IDs)
 %% Opdracht 16
 [IDs,~] = s0216676_actualBestMovies(R);
-fprintf("Actual Best Movies : ")
+fprintf("Feitelijke beste films : ")
 movieLabel(IDs(1:25))
-reviews = sum(R(IDs(1:25),:)~=0,2)
+reviews = sum(R(IDs(1:25),:)~=0,2) %#ok
 median(reviews)
 sum(reviews)
 [IDs,~] = s0216676_predictedBestMovies(U20,s20,V20);
-fprintf("Predicted Best Movies : ")
+fprintf("Voorspelde beste films : ")
 movieLabel(IDs(1:25))
-reviews = sum(R(IDs(1:25),:)~=0,2)
+reviews = sum(R(IDs(1:25),:)~=0,2) %#ok
 median(reviews)
 sum(reviews)
+%% Opdracht 18
+for j = [98,10100]
+    [best,score] = s0216676_predictedBestMoviesForUser(R,U20,s20,V20,j);
+    fprintf("10 beste films : ")
+    movieLabel(best(1:10))
+    score(1:10)
+    fprintf("---------------------")
+end
+reviews = find(T(:,98) >= 4.5);
+movieLabel(reviews)
+T(reviews,98)
