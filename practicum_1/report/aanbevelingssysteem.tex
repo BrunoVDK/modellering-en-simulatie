@@ -196,15 +196,15 @@ end
 %%%
 %%%
 
-\fakesubsection{Opdracht 11 IS DIT WEL OK\'E???}
+\fakesubsection{Opdracht 11}
 
 De \texttt{RMSE} bedraagt iets meer dan 26 :
 
 \begin{lstlisting}
 [i,j] = find(T);
 mu = s0216676_userMeans(R);
-err = s0216676_RMSE(T, repmat(mu', m, 1)) 
-% Prints "err = 26.6238"
+fprintf("RMSE : %.4f\n", s0216676_RMSE(T, sparse(i,j,mu(j))))
+% Prints "err = 0.8823"
 \end{lstlisting}
 
 %%%
@@ -459,6 +459,6 @@ Kubo and the Two Strings (2016)             & 5.0000
 \label{fig:op18c}
 \end{table}
 
-\noindent Voor gebruiker 10100 worden voornamelijk Marvel films aangeraden. Voor gebruiker 98 komen 3 aanbevelingen overeen met diens hoogst-beoordeelde films (in matrix $T$, niet in matrix $R$). De andere films hebben een gelijkaardig genre, dus is wat aangeraden wordt best ok\'e.
+\noindent Voor gebruiker 10100 worden voornamelijk Marvel films aangeraden. Voor gebruiker 98 komen 3 aanbevelingen overeen met diens hoogst-beoordeelde films (in matrix $T$, niet in matrix $R$). De andere films hebben een gelijkaardig genre, dus is wat aangeraden wordt best ok\'e.\\
 
 

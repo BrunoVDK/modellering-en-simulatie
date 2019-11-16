@@ -65,7 +65,7 @@ round(U * diag(s) * V', 1) % Drukt dezelfde waarden af als die opgegeven in de o
 %% Opdracht 11
 [i,j] = find(T);
 mu = s0216676_userMeans(R);
-fprintf("RMSE : %.4f\n", s0216676_RMSE(T, repmat(mu', m, 1)))
+fprintf("RMSE : %.4f\n", s0216676_RMSE(T, sparse(i,j,mu(j))))
 %% Opdracht 12
 tic
 k = 30;
