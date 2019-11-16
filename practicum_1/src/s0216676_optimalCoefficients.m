@@ -1,11 +1,11 @@
 function [s] = s0216676_optimalCoefficients(Uk,Vk,A)
-    nonzero = nnz(A);
     [m,k] = size(Uk);
     [n,~] = size(Vk);
-    B = sparse([], [], [], m * n, k, k * nonzero); % Allocate space
+    B = sparse([], [], [], m * n, k, k * nnz(A)); % Allocate space
     for j = 1:k
-        temp = s0216676_sparseModel(Uk(:,j), 1, Vk(:,j), A);
-        B(:,j) = temp(:); %#ok
+        B(:,j) = reshape(s0216676_sparseModel(Uk(:,j), 1, Vk(:,j), A), [], 1); %#ok
     end
-    s = lsqr(B, A(:));
+    % s = lsqminnorm(B , A(:));
+    [s,~] = lsqr(B, A(:));
+    % s = lsqr(B, A(:), [], 10);
 end

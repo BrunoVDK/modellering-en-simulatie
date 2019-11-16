@@ -1,14 +1,16 @@
+%% Clear console and workspace
+clc
+clear
+%% Load data
 set(0, 'defaultFigurePosition', get(0, 'Screensize')); % Figuren vullen scherm
 load('MovieLens_Subset.mat');
-%%
-% Opdracht 1
+[m,n] = size(R);
+%% Opdracht 1
 subplot(1,2,1)
 spy(R(1:1000,1:1000))
 subplot(1,2,2)
 spy(T(1:1000,1:1000))
-%%
-% Opdracht 2
-[m,n] = size(R);
+%% Opdracht 2
 ratings = nnz(R);
 int_mem = 4;
 double_mem = 8;
@@ -35,34 +37,51 @@ plot(snijpunt_r, size_sparse, 'kp')
 xlabel('r')
 ylabel('Geheugenverbruik')
 legend('Ijle R', 'Benadering', 'Location', 'northeast') 
-%%
-% Opdracht 5
+%% Opdracht 5
 A = sprand(4, 4, 1);
 disp(A);
 [Uk, sk, Vk] = svds(A);
 X = s0216676_sparseModel(Uk, diag(sk), Vk, A);
 disp(X);
-%%
-% Opdracht 6
-k = 15;
-nonzero = nnz(R);
-[i,~] = find(R(:));
-j = repmat(1:k, nonzero, 1);
-B = sparse(repmat(i, k, 1), j(:), ones(nonzero * k, 1), m * n, k, k * nonzero);
+%% Opdracht 6
+B = repmat(spones(R(:)), 1, 15);
 spy(B(1:500,:))
-%%
-% Opdracht 7
+%% Opdracht 7
 tic
 [U,S,V] = svds(R);
 s0216676_optimalCoefficients(U,V,R)
 toc
-%%
-% Opdracht 10
-% Little test with the example data in the assignment
+%% Opdracht 9
+mu = s0216676_userMeans(R);
+fprintf("Aantal gebruikers met gemiddelde score van 5 : %i\n", length(mu(mu == 5)))
+t = sort(mu); 
+fprintf("Laagste gemiddeldes : \n")
+fprintf("%.4f\n", full(t(1:3)'))
+%% Opdracht 10
+% Test op de voorbeeldmatrix in de opgave
 R = [0 0 3.5 3.0 0 3.0 0 0 0 3.0 0 ; 2.5 0 4.0 0 0 0 0 0 5.0 2.5 0 ; 2.5 5.0 5.0 5.0 4.0 4.0 0 0.5 4.5 0 3.0 ; 0 0 4.5 0 0 0 3.5 0 0 0 3.5 ; 2.5 0 0 0 0 0 0 0 0 2.5 0];
-[U,s,V,rmse] = s0216676_rank1MatrixPursuit(R,3,R);
-round(U * diag(s) * V', 1) % Should print same matrix as the one in the assignment
-%%
-% Opdracht 12
-
-
+[U,s,V,~] = s0216676_rank1MatrixPursuit(R,3,R);
+round(U * diag(s) * V', 1) % Drukt dezelfde waarden af als die opgegeven in de opgave
+%% Opdracht 11
+[i,j] = find(T);
+mu = s0216676_userMeans(R);
+fprintf("RMSE : %.4f\n", s0216676_RMSE(T, repmat(mu', m, 1)))
+%% Opdracht 12
+tic
+k = 30;
+[U,s,V,rmse] = s0216676_rank1MatrixPursuit(R,k,T);
+plot(1:k, rmse, 'b-')
+xlabel('k')
+ylabel('rmse')
+toc
+%% Opdracht 13
+[U20,s20,V20,~] = s0216676_rank1MatrixPursuit(R,20,T);
+round(s20(1:20),1)
+%% Opdracht 14
+% Unit test
+X = [1 0 1 3 ; 5 4 0 1 ; 2 4 0 0];
+disp(X)
+[IDs,score] = s0216676_actualBestMovies(X);
+fprintf("Score : %.2f\n", score)
+fprintf("IDs : %i\n", IDs)
+%% Opdracht 15

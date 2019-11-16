@@ -95,6 +95,8 @@ Men kan opmerken dat dit niet verreist dat de $u_j$ en $v_j$ bekomen in stap 4 o
 \par\noindent Berekent men ten slotte $A-E_k$ dan bekomt men het gevraagde :
 $$A-E_k = \sum_{i=1}^{r} \sigma_iu_iv_i^T-\sum_{i=k+1}^{r} \sigma_iu_iv_i^T=\sum_{i=1}^{k} \sigma_iu_iv_i^T$$
 
+\noindent Het algoritme stopt na $k$ stappen (mits men veronderstelt dat $k\leq r$, want anders stop the algoritme vroeger dan dat).
+
 %%%
 %%%
 %%%
@@ -132,11 +134,7 @@ end
 TE VRAGEN AAN ASSISTENT
 
 \begin{lstlisting}
-k = 15;
-nonzero = nnz(R);
-[i,~] = find(R(:));
-j = repmat(1:k, nonzero, 1);
-B = sparse(repmat(i, k, 1), j(:), ones(nonzero * k, 1), m * n, k, k * nonzero);
+B = repmat(spones(R(:)), 1, 15);
 spy(B(1:500,:))
 \end{lstlisting}
 
@@ -146,19 +144,17 @@ spy(B(1:500,:))
 
 \fakesubsection{Opdracht 7}
 
-Door op voorhand $\mathcal{O}(\zeta)$ aan geheugen vrij te maken en dan stap voor stap de kolommen van B aan te vullen met de resultaten van de \texttt{sparseModel} functie (die op zijn beurt $\mathcal{O}(\zeta)$ geheugen gebruikt) blijft het geheugengebruik binnen de opgelegde limiet.
+Door op voorhand $\mathcal{O}(k\zeta)$ aan geheugen vrij te maken en dan stap voor stap de kolommen van B aan te vullen met de resultaten van de \texttt{sparseModel} functie (die op zijn beurt $\mathcal{O}(\zeta)$ geheugen gebruikt) blijft het geheugengebruik binnen de opgelegde limiet.
 
 \begin{lstlisting}
 function [s] = s0216676_optimalCoefficients(Uk,Vk,A)
-    nonzero = nnz(A);
     [m,k] = size(Uk);
     [n,~] = size(Vk);
-    B = sparse([], [], [], m * n, k, k * nonzero); % Allocate space
+    B = sparse([], [], [], m * n, k, k * nnz(A)); % Allocate space
     for j = 1:k
-        temp = s0216676_sparseModel(Uk(:,j), 1, Vk(:,j), A);
-        B(:,j) = temp(:); %#ok
+        B(:,j) = reshape(s0216676_sparseModel(Uk(:,j), 1, Vk(:,j), A), [], 1); %#ok
     end
-    s = lsqr(B, A(:));
+    [s,~] = lsqr(B, A(:));
 end
 \end{lstlisting}
 
@@ -168,11 +164,11 @@ end
 
 \fakesubsection{Opdracht 8}
 
-Om de gemiddelde beoordeling per gebruiker te bekomen wordt de som van al diens beoordelingen genomen en gedeeld door het aantal beoordelingen dat niet nul is. Vervolgens wordt de bekomen ijle vector omgevormd tot een volle kolomvector.
+Om de gemiddelde beoordeling per gebruiker te bekomen wordt de som van al diens beoordelingen genomen en gedeeld door het aantal beoordelingen dat niet nul is. Vervolgens wordt de bekomen ijle vector omgevormd tot een kolomvector.
 
 \begin{lstlisting}
 function [mu] = s0216676_userMeans(A)
-    mu = full(sum(A, 1) ./ sum(A ~= 0))'
+    mu = (sum(A, 1) ./ sum(A ~= 0))'
 end
 \end{lstlisting}
 
@@ -182,7 +178,7 @@ end
 
 \fakesubsection{Opdracht 9}
 
-Er zijn \mcode{length(mu(mu == 5))} (= 13) gebruikers die een gemiddelde beoordeling hebben van 5. De laagste drie gemiddeldes bedrage 0.5100, 0.5727 en 0.8983 (\mcode{sort(mu) ; ans(1:3)}).
+Er zijn \mcode{length(mu(mu == 5))} (dwz. 13) gebruikers die een gemiddelde beoordeling hebben van 5. De laagste drie gemiddelden bedragen 0.5100, 0.5727 en 0.8983 (\mcode{sort(mu) ; ans(1:3)}).
 
 %%%
 %%%
@@ -190,7 +186,7 @@ Er zijn \mcode{length(mu(mu == 5))} (= 13) gebruikers die een gemiddelde beoorde
 
 \fakesubsection{Opdracht 10}
 
-De code voor deze opdracht is eenvoudig :
+Men kan de \texttt{RMSE} als volgt berekenen :
 
 \begin{lstlisting}
 function [err] = s0216676_RMSE(A,B)
@@ -204,9 +200,77 @@ end
 
 \fakesubsection{Opdracht 11}
 
+De \texttt{RMSE} bedraagt iets meer dan 26 :
+
+\begin{lstlisting}
+[i,j] = find(T);
+mu = s0216676_userMeans(R);
+err = s0216676_RMSE(T, repmat(mu', m, 1)) 
+% Prints "err = 26.6238"
+\end{lstlisting}
+
 %%%
 %%%
 %%%
 
 \fakesubsection{Opdracht 12}
+
+VRAGEN ASSISTENT : DIVERGENTIE OK?
+
+De \texttt{RMSE} is te zien in figuur \ref{fig:op12}. De volle berekening duurde ongeveer 250 seconden.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{res/op12.png}
+\caption{Resultaat van het algoritme voor $k=30$, toegepast op de MovieLens dataset. Totale duur : 256 seconden.}
+\label{fig:op12}
+\end{figure}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 13}
+
+De vector $s_{20}$ ziet er als volgt uit :
+$$[1.0\ 806.2\ 386.4\ 383.2\ 284.9\ 248.9\ 192.7\ 199.2\ 179.9\ 171.3\ 133.1\ 152.1\ 136.0\ 143.8\ 122.0\ 120.5\ 128.8\ 116.9\ 120.2\ 124.7]$$
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 14}
+
+De functie kan in \'e\'en lijn geschreven worden :
+
+\begin{lstlisting}
+function [movieIDs,score] = s0216676_actualBestMovies(R)
+    [score,movieIDs] = sort(sum(R,2) ./ sum(R~=0,2), 'descend');
+end
+\end{lstlisting}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 15}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 16}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 17}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 18}
+
 
