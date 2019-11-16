@@ -85,15 +85,15 @@ disp(X)
 fprintf("Score : %.2f\n", score)
 fprintf("IDs : %i\n", IDs)
 %% Opdracht 16
-[IDs,~] = s0216676_actualBestMovies(R);
+[actualIDs,~] = s0216676_actualBestMovies(R);
+[predictedIDs,~] = s0216676_predictedBestMovies(U20,s20,V20);
 fprintf("Actual Best Movies : ")
-movieLabel(IDs(1:25))
-reviews = sum(R(IDs(1:25),:)~=0,2)
-median(reviews)
-sum(reviews)
-[IDs,~] = s0216676_predictedBestMovies(U20,s20,V20);
+movieLabel(actualIDs(i))
+for i = 1:25
+   fprintf("%s | %i", , nnz(R(i,:)));
+end
 fprintf("Predicted Best Movies : ")
-movieLabel(IDs(1:25))
-reviews = sum(R(IDs(1:25),:)~=0,2)
-median(reviews)
-sum(reviews)
+movieLabel(predictedIDs(i))
+for i = 1:25
+   fprintf("%s | %i", , nnz(R(i,:)));
+end

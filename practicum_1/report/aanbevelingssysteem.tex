@@ -129,9 +129,7 @@ end
 %%%
 %%%
 
-\fakesubsection{Opdracht 6}
-
-TE VRAGEN AAN ASSISTENT
+\fakesubsection{Opdracht 6 TE VRAGEN AAN ASSISTENT}
 
 \begin{lstlisting}
 B = repmat(spones(R(:)), 1, 15);
@@ -198,7 +196,7 @@ end
 %%%
 %%%
 
-\fakesubsection{Opdracht 11}
+\fakesubsection{Opdracht 11 IS DIT WEL OK\'E???}
 
 De \texttt{RMSE} bedraagt iets meer dan 26 :
 
@@ -213,15 +211,13 @@ err = s0216676_RMSE(T, repmat(mu', m, 1))
 %%%
 %%%
 
-\fakesubsection{Opdracht 12}
-
-VRAGEN ASSISTENT : DIVERGENTIE OK?
+\fakesubsection{Opdracht 12 VRAGEN ASSISTENT : DIVERGENTIE OK?}
 
 De \texttt{RMSE} is te zien in figuur \ref{fig:op12}. De volle berekening duurde ongeveer 250 seconden.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.5\textwidth]{res/op12.png}
+\includegraphics[width=0.7\textwidth]{res/op12.png}
 \caption{Resultaat van het algoritme voor $k=30$, toegepast op de MovieLens dataset. Totale duur : 256 seconden.}
 \label{fig:op12}
 \end{figure}
@@ -255,11 +251,114 @@ end
 
 \fakesubsection{Opdracht 15}
 
+Deze keer moet de berekening iteratief gebeuren om het gevraagde maximum aan geheugencomplexiteit te respecteren. De gemiddelde score van elke film wordt apart berekent tot de lijst compleet is. Hierna wordt hij gesorteerd.
+
+\begin{lstlisting}
+function [movieIDs,score] = s0216676_predictedBestMovies(Uk,sk,Vk)
+    [m,~] = size(Uk); 
+    [n,~] = size(Vk);
+    score = zeros(n, 1);
+    for i = 1:m
+        acc = 0;
+        x = Uk(i,:) .* sk';
+        for j = 1:n
+            acc = x * Vk(j,:)' + acc;
+        end
+        score(i) = acc / n;
+    end
+    [score, movieIDs] = sort(score, 'descend');
+end
+\end{lstlisting}
+
 %%%
 %%%
 %%%
 
+\newgeometry{top=1.5cm,bottom=1.5cm}
+\thispagestyle{empty}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+\textbf{Feitelijke beste films} & \textbf{\# beoordelingen} \\
+\hline
+Planet Earth II (2016)                              &  387 \\
+Black Mirror: White Christmas (2014)                &  594 \\
+Won't You Be My Neighbor? (2018)                    &   57 \\
+Sherlock - A Study in Pink (2010)                   &  131 \\
+Blue Planet II (2017)                               &  131 \\
+Over the Garden Wall (2013)                         &  218 \\
+Whiplash (2013)                                     &  357 \\
+Human Planet (2011)                                 &  177 \\
+Inception (2010)                                    & 7631 \\
+The Night Of (2016)                                 &  184 \\
+The Jinx: The Life and Deaths of Robert Durst (2015)&  401 \\
+Making a Murderer (2015)                            &  113 \\
+Piper (2016)                                        &  631 \\
+Frozen Planet (2011)                                &  198 \\
+Whiplash (2014)                                     & 3535 \\
+Bo Burnham: what. (2013)                            &   95 \\
+The Handmaiden (2016)                               &  544 \\
+Your Name. (2016)                                   &  605 \\
+Story of Film: An Odyssey, The (2011)               &   59 \\
+Laurence Anyways (2012)                             &   77 \\
+Intouchables (2011)                                 & 3331 \\
+Spotlight (2015)                                    & 2264 \\
+Winter on Fire: Ukraine's Fight for Freedom (2015)  &   54 \\
+John Mulaney: New In Town (2012)                    &  155 \\
+O.J.: Made in America (2016)                        &  213\\
+\hline
+Totaal & 22142 \\
+Mediaan & 213
+\end{tabular}
+\caption{Resultaten van de oproep van functie \texttt{s0216676\_actualBestMovies}.}
+\label{fig:op16a}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+\textbf{Voorspelde beste films} & \textbf{\# beoordelingen} \\
+\hline
+Inception (2010)                & 7631 \\
+Whiplash (2014)                 & 3535 \\
+Intouchables (2011)             & 3331 \\
+Interstellar (2014)             & 6181 \\
+Django Unchained (2012)         & 5851 \\
+The Martian (2015)              & 5268 \\
+Arrival (2016)                  & 3508 \\
+Gone Girl (2014)                & 4337 \\
+Shutter Island (2010)           & 5505 \\
+Grand Budapest Hotel, The (2014)& 4444 \\
+Spotlight (2015)                & 2264 \\
+Dark Knight Rises, The (2012)   & 6182 \\
+King's Speech, The (2010)       & 4225 \\
+Ex Machina (2015)               & 4412 \\
+The Imitation Game (2014)       & 4614 \\
+Big Short, The (2015)           & 2886 \\
+Edge of Tomorrow (2014)         & 4807 \\
+Inside Out (2015)               & 4549 \\
+Prisoners (2013)                & 2360 \\
+Guardians of the Galaxy (2014)  & 5700 \\
+Her (2013)                      & 3856 \\
+Nightcrawler (2014)             & 3139 \\
+Room (2015)                     & 1674 \\
+Wolf of Wall Street, The (2013) & 5141 \\
+Dallas Buyers Club (2013)       & 2747\\
+\hline
+Totaal & 108147 \\
+Mediaan & 4412
+\end{tabular}
+\caption{Resultaten van de oproep van functie \texttt{s0216676\_predictedBestMovies}.}
+\label{fig:op16b}
+\end{table}
+
+\restoregeometry
+
+\newpage
 \fakesubsection{Opdracht 16}
+
+De `beste films' worden weergegeven in figuur \ref{fig:op16a} en \ref{fig:op16b}. De mediaan voor het aantal beoordelingen bedraagt respectievelijk 213 en 4412. Dus niet alleen ziet de lijst van voorspelde beste films er heel wat realistischer uit, de films hebben ook heel wat meer beoordelingen. Dat maakt de lijst betrouwbaarder.
 
 %%%
 %%%
