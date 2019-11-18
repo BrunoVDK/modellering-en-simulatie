@@ -35,7 +35,7 @@ spy(T(1:1000,1:1000))
 
 \fakesubsection{Opdracht 2}
 
-Stel dat gehele getallen 4 - en re\"ele getallen 8 bytes innemen. De volle matrix \texttt{full(R)} zou dan 220388224 bytes ($\approx 210$MB) in beslag nemen ; 1 re\"eel getal per element. Voor de ijle matrix \texttt{sparse(R)} lijkt het op het eerste gezicht 18525728 bytes ($< 18$MB) te zijn ; 2 gehele getallen en 1 re\"eel getal per element dat niet nul is. MatLab verbruikt echter iets meer dan dat. Als men de juiste formule toepast voor het geheugenverbruik van ijle matrices \footnote{\textit{\texttt{MATLAB} gebruikt het \texttt{CSC} formaat voor ijle matrices : ``Even though \texttt{MATLAB} is written in \texttt{C}, it follows its \texttt{LINPACK} and \texttt{Fortran} predecessors and stores full matrices by columns. This organization has been carried over to sparse matrices. A sparse matrix is stored as the concatenation of the sparse vectors representing its columns. Each sparse vector consists of a floating point array of nonzero entries (or two such arrays for complex matrices), together with an integer array of row indices. A second integer array gives the locations in the other arrays of the first element in each column. Consequently, the storage requirement for an $m\times n$ reals parse matrix with $nnz$ nonzero entries is $nnz$ reals and $nnz+n$ integers. On typical machines with 8-byte reals and 4-byte integers, this is $12nnz+4n$ bytes.''} \cite{Gilbert1992}} :
+Stel dat gehele getallen 4 - en re\"ele getallen 8 bytes innemen. De volle matrix \texttt{full(R)} zou dan 220388224 bytes ($\approx 210$MB) in beslag nemen ; 1 re\"eel getal per element. Voor de ijle matrix \texttt{sparse(R)} lijkt het op het eerste gezicht 18525728 bytes ($< 18$MB) te zijn ; 2 gehele getallen en 1 re\"eel getal per element dat niet nul is. MatLab verbruikt echter iets meer dan dat. Als men de juiste formule toepast voor het geheugenverbruik van ijle matrices \footnote{\texttt{MATLAB} gebruikt het \texttt{CSC} formaat voor ijle matrices : \textit{``Even though \texttt{MATLAB} is written in \texttt{C}, it follows its \texttt{LINPACK} and \texttt{Fortran} predecessors and stores full matrices by columns. This organization has been carried over to sparse matrices. A sparse matrix is stored as the concatenation of the sparse vectors representing its columns. Each sparse vector consists of a floating point array of nonzero entries (or two such arrays for complex matrices), together with an integer array of row indices. A second integer array gives the locations in the other arrays of the first element in each column. Consequently, the storage requirement for an $m\times n$ reals parse matrix with $nnz$ nonzero entries is $nnz$ reals and $nnz+n$ integers. On typical machines with 8-byte reals and 4-byte integers, this is $12nnz+4n$ bytes.''} \cite{Gilbert1992}} :
 $$12\times nnz+4\times n$$
 dan komt men uit op bijna 14 miljoen bytes. Op mijn computer was het totaal meer dan 18,6 miljoen omdat gehele getallen daar met 8 bytes worden voorgesteld.
 
@@ -129,7 +129,16 @@ end
 %%%
 %%%
 
-\fakesubsection{Opdracht 6 TE VRAGEN AAN ASSISTENT}
+\fakesubsection{Opdracht 6}
+
+Het patroon in de bekomen figuur (figuur \ref{fig:op6}) komt overeen met het ijlheidspatroon van $R$. Dit kan men gebruiken in de volgende opgave. De bekomen matrix $B$ heeft dan al de gewenste structuur en neemt $\mathcal{O}(k\zeta)$ geheugen in.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.1\textwidth]{res/op6.png}
+\caption{Resultaat voor opdracht 6. Men herkent het ijlheidspatroon van $R$.}
+\label{fig:op6}
+\end{figure}
 
 \begin{lstlisting}
 B = repmat(spones(R(:)), 1, 15);
@@ -146,11 +155,9 @@ Door op voorhand $\mathcal{O}(k\zeta)$ aan geheugen vrij te maken en dan stap vo
 
 \begin{lstlisting}
 function [s] = s0216676_optimalCoefficients(Uk,Vk,A)
-    [m,k] = size(Uk);
-    [n,~] = size(Vk);
-    B = sparse([], [], [], m * n, k, k * nnz(A)); % Allocate space
-    for j = 1:k
-        B(:,j) = reshape(s0216676_sparseModel(Uk(:,j), 1, Vk(:,j), A), [], 1); %#ok
+    B = repmat(spones(A(:)), 1, size(Uk,2));
+    for j = 1:size(Uk,2)
+        B(:,j) = reshape(s0216676_sparseModel(Uk(:,j), 1, Vk(:,j), A), [], 1);
     end
     [s,~] = lsqr(B, A(:));
 end
@@ -203,7 +210,7 @@ De \texttt{RMSE} bedraagt iets meer dan 26 :
 \begin{lstlisting}
 [i,j] = find(T);
 mu = s0216676_userMeans(R);
-fprintf("RMSE : %.4f\n", s0216676_RMSE(T, sparse(i,j,mu(j))))
+err = round(s0216676_RMSE(T, sparse(i,j,mu(j))), 4)
 % Prints "err = 0.8823"
 \end{lstlisting}
 
@@ -211,14 +218,14 @@ fprintf("RMSE : %.4f\n", s0216676_RMSE(T, sparse(i,j,mu(j))))
 %%%
 %%%
 
-\fakesubsection{Opdracht 12 VRAGEN ASSISTENT : DIVERGENTIE OK?}
+\fakesubsection{Opdracht 12}
 
-De \texttt{RMSE} is te zien in figuur \ref{fig:op12}. De volle berekening duurde ongeveer 250 seconden.
+De \texttt{RMSE} is te zien in figuur \ref{fig:op12}. De volle berekening duurde ongeveer 250 seconden. De reden waarom er divergentie optreedt is dat er \textit{overfitting} is (het model veralgemeent niet goed meer wanneer het de oorspronkelijke data `te goed' benadert).
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{res/op12.png}
-\caption{Resultaat van het algoritme voor $k=30$, toegepast op de MovieLens dataset. Totale duur : 256 seconden.}
+\includegraphics[width=0.5\textwidth]{res/op12.png}
+\caption{Resultaat van het algoritme voor $k=30$, toegepast op de MovieLens dataset.}
 \label{fig:op12}
 \end{figure}
 
