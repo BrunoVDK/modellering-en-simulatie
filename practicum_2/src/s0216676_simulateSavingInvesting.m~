@@ -1,0 +1,14 @@
+function [yield, invested, value] = s0216676_simulateSavingInvesting(budget, rate, months)
+    value = zeros(months); invested = 0; % Initialise
+    fractions = (12:-1:1) / 12 * (rate/100); % To calculate partial rates for past year
+    for j = 13:12:months % Consider each month of january
+        saved = sum(budget * fractions) + value(j-12) * (rate/100); % Savings for year
+        invested = invested + 12 * budget;
+        budget = budget * 1.02; % Yearly increase in budget
+    	value(j) = value(j) + (saved - 0.15 * (saved > 980) * (saved - 980));
+        value(j-12:j) = cumsum(value(j-12:j)); % Accumulate sums until this year (january)
+    end
+    value(j+1:end) = value(j) + budget .* (1:months-j); 
+    invested = invested + budget * (months-year);
+    yield = value(months) / invested - 1;
+end
