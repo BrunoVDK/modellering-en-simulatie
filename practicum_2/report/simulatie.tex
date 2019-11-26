@@ -37,7 +37,7 @@ Het resultaat van de gegeven code is te zien in figuur \ref{fig:op2}. De totale 
 \vspace{0.3cm}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth]{res/op2.png}
+\includegraphics[width=0.45\textwidth]{res/op2.png}
 \caption{Simulatie van spaarrekeningen met verschillende rentevoeten.}
 \label{fig:op2}
 \end{figure}
@@ -47,6 +47,81 @@ Het resultaat van de gegeven code is te zien in figuur \ref{fig:op2}. De totale 
 %%%
 
 \fakesubsection{Opdracht 3}
+
+Het bestand wordt ingeladen.
+
+\begin{lstlisting}
+load('Funds.mat')
+\end{lstlisting}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 4}
+
+Men kan de parameters berekenen door eerst $\sigma$ te bepalen op basis van de rendementen, het gemiddelde te berekenen van diezelfde rendementen en vervolgens $\mu$ daaruit te bepalen.\\
+\par\noindent De bekomen parameters bedragen $\mu = 3.208565\times 10^{-3}, \sigma = 3.070426\times 10^{-2}$ (voor \texttt{EUN5}) en $\mu = 7.857782\times 10^{-3}, \sigma = 3.277546\times 10^{-2}$ (voor \texttt{VWRL}).
+
+\begin{lstlisting}
+function [mu,sigma] = s0216676_estimateParameters(s)
+    rendements = log(s(2:end) ./ s(1:end-1));
+    sigma = std(rendements);
+    mu = mean(rendements) - 0.5 * sigma^2;
+end
+\end{lstlisting}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 5}
+
+De implementatie maakt gebruik van een eenvoudige \mcode{for} loop.
+
+\begin{lstlisting}
+function [path] = s0216676_simulateFundPath(initialPrice, mu, sigma, months)
+    alpha = mu - 0.5 * sigma^2;
+    path = repelem(initialPrice, 1, months);
+    for i = 2:months
+        path(i) = path(i-1) * exp(alpha * t + sigma * sqrt(t) * rand);
+    end
+end
+\end{lstlisting}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 6}
+
+In figuur \ref{fig:op6} worden de resulterende paden afgebeeld. Een aantal paden wijken af van de werkelijke koers afgebeeld in de opgave, maar vele van de paden komen in de buurt. De initi\"ele waarde werdt gezet op 74.19 euro wat overeenstemt met de waarde in dollar op 26 november 2019.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{res/op6.png}
+\caption{Simulatie van spaarrekeningen met verschillende rentevoeten.}
+\label{fig:op6}
+\end{figure}
+
+\begin{lstlisting}
+figure; hold all;
+for i = 1:10
+    plot(s0216676_simulateFundPath(74.19, mu, sigma, 60)); % Converted to euros (26/11/2019)
+end
+\end{lstlisting}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 7}
+
+aa
+
+\begin{lstlisting}
+
+\end{lstlisting}
 
 
 
