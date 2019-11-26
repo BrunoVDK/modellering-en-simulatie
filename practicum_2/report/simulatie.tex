@@ -65,9 +65,9 @@ Men kan de parameters berekenen door eerst $\sigma$ te bepalen op basis van de r
 
 \begin{lstlisting}
 function [mu,sigma] = s0216676_estimateParameters(s)
-    rendements = log(s(2:end) ./ s(1:end-1));
+    rendements = log(s(2:end) ./ s(1:end-1)); % Base doesn't matter
     sigma = std(rendements);
-    mu = mean(rendements) - 0.5 * sigma^2;
+    mu = mean(rendements) + 0.5 * sigma^2;
 end
 \end{lstlisting}
 
