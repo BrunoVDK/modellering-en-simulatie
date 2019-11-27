@@ -117,12 +117,100 @@ end
 
 \fakesubsection{Opdracht 7}
 
-aa
+De cumulatieve distributiefuncties zijn afgebeeld in figuur \ref{fig:op7}. Op basis hiervan kan men met een zekere graad van vertrouwen beweren dat de log-rendementen effectief normaal verdeeld is. Normaal gezien maakt men gebruik van specifieke testen om dit te kwantificeren.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{res/op7.png}
+\caption{Cumulatieve distributiefuncties van de log-rendementen en het model.}
+\label{fig:op7}
+\end{figure}
 
 \begin{lstlisting}
-
+[f,x] = ecdf(log(VWRL(2:end) ./ VWRL(1:end-1)));
+[f_norm] = normcdf(x, mu, sigma);
+figure; hold all;
+plot(x, f, x,f_norm);
+legend('Log-Rendementen', 'Model', 'Location', 'NorthWest');
 \end{lstlisting}
 
+%%%
+%%%
+%%%
 
+\fakesubsection{Opdracht 8}
+
+Het kon ook met een lus, maar ik deed het deze keer met ingebouwde functies. 
+
+\begin{lstlisting}
+function [yield, invested, value, units] = s0216676_simulateFundInvestingPath(budget,pricePath,alpha)
+    months = size(alpha,1);
+    budgets = repelem(budget * (1.02 .^ (0:floor(months/12))'), 12, 2);
+    invested = sum(budgets(1:months,1));
+    units = (budgets(1:months,:) .* [alpha (1-alpha)] - 6) / 1.0035;
+    for i = 1:2
+        units(units(:,i) < 0, 3-i) = (budgets(units(:,i) < 0) - 6) / 1.0035;
+        units(units(:,i) < 0, i) = 0;
+    end
+    units = cumsum(units ./ pricePath);
+    value = units .* pricePath;
+    yield = sum(value(end,:)) / invested - 1;
+end
+\end{lstlisting}
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 9}
+
+De resulterende figuren zijn afgebeeld op de volgende pagina.
+
+\newgeometry{top=1.5cm,bottom=1.5cm}
+\thispagestyle{empty}
+
+\topskip0pt
+\vspace*{\fill}
+
+\begin{figure}[h]
+\centering
+\subfloat[Iteratie 1]{{\includegraphics[width=\textwidth]{res/op8a.png} }}\\
+\subfloat[Iteratie 2]{{\includegraphics[width=\textwidth]{res/op8b.png} }}
+\caption{Waarde van vier type investeringen doorheen een periode van 120 maanden.}%
+\label{fig:op8}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{res/op9b.png}
+\caption{Waarde van de investering op maandelijkse basis.}
+\label{fig:op9a}
+\end{figure}
+
+\vspace*{\fill}
+
+\restoregeometry
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 10}
+
+
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 11}
+
+
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 12}
 
 
