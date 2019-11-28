@@ -91,7 +91,8 @@ movieLabel(IDs(1:25))
 reviews = sum(R(IDs(1:25),:)~=0,2) %#ok
 median(reviews)
 sum(reviews)
-[IDs,~] = s0216676_predictedBestMovies(U20,s20,V20);
+[IDs,score] = s0216676_predictedBestMovies(U20,s20,V20);
+score(1:25)
 fprintf("Voorspelde beste films : ")
 movieLabel(IDs(1:25))
 reviews = sum(R(IDs(1:25),:)~=0,2) %#ok

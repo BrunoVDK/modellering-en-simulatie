@@ -258,28 +258,49 @@ end
 
 \fakesubsection{Opdracht 15}
 
-Deze keer moet de berekening iteratief gebeuren om het gevraagde maximum aan geheugencomplexiteit te respecteren. De gemiddelde score van elke film wordt apart berekend tot de lijst compleet is. Hierna wordt hij gesorteerd.
+Deze keer moet de berekening iteratief gebeuren om het gevraagde maximum aan geheugencomplexiteit te respecteren. De scores worden geaccumuleerd, dan wordt hun gemiddelde genomen en ten slotte worden ze gesorteerd.
 
 \begin{lstlisting}
 function [movieIDs,score] = s0216676_predictedBestMovies(Uk,sk,Vk)
-    [m,~] = size(Uk); 
-    [n,~] = size(Vk);
-    score = zeros(n, 1);
-    for i = 1:m
-        acc = 0;
-        x = Uk(i,:) .* sk';
-        for j = 1:n
-            acc = x * Vk(j,:)' + acc;
-        end
-        score(i) = acc / n;
+    [m,k] = size(Uk);
+    score = zeros(m, 1);
+    for i = 1:k
+        score = score + Uk(:,i) * sk(i) * sum(Vk(:,i));
     end
-    [score, movieIDs] = sort(score, 'descend');
+    [score, movieIDs] = sort(score / size(Vk,1), 'descend');
 end
 \end{lstlisting}
 
 %%%
 %%%
 %%%
+
+\fakesubsection{Opdracht 16}
+
+De `beste films' worden weergegeven in tabel \ref{fig:op16a} en \ref{fig:op16b}. De mediaan voor het aantal beoordelingen bedraagt respectievelijk 213 en 4412. Dus niet alleen ziet de lijst van voorspelde beste films er heel wat realistischer uit, de films hebben ook heel wat meer beoordelingen. Dat maakt de lijst betrouwbaarder.
+
+%%%
+%%%
+%%%
+
+\fakesubsection{Opdracht 17}
+
+De functie werd als volgt ge\"implementeerd :
+
+\begin{lstlisting}
+function [movieIDs,score] = s0216676_predictedBestMoviesForUser(R,Uk,sk,Vk,j)
+    [m,~] = size(R);
+    indices = setdiff(1:m,find(R))';
+    n = length(indices);
+    score = zeros(n,1);
+    x = sk .* Vk(j,:)';
+    for i = 1:n
+       score(i) = Uk(indices(i),:) * x;
+    end
+    [score,permutation] = sort(score, 'descend');
+    movieIDs = indices(permutation);
+end
+\end{lstlisting}
 
 \newgeometry{top=1.5cm,bottom=1.5cm}
 \thispagestyle{empty}
@@ -361,34 +382,7 @@ Mediaan & 4412
 \end{table}
 
 \restoregeometry
-
 \newpage
-\fakesubsection{Opdracht 16}
-
-De `beste films' worden weergegeven in tabel \ref{fig:op16a} en \ref{fig:op16b}. De mediaan voor het aantal beoordelingen bedraagt respectievelijk 213 en 4412. Dus niet alleen ziet de lijst van voorspelde beste films er heel wat realistischer uit, de films hebben ook heel wat meer beoordelingen. Dat maakt de lijst betrouwbaarder.
-
-%%%
-%%%
-%%%
-
-\fakesubsection{Opdracht 17}
-
-De functie werd als volgt ge\"implementeerd :
-
-\begin{lstlisting}
-function [movieIDs,score] = s0216676_predictedBestMoviesForUser(R,Uk,sk,Vk,j)
-    [m,~] = size(R);
-    indices = setdiff(1:m,find(R))';
-    n = length(indices);
-    score = zeros(n,1);
-    x = sk .* Vk(j,:)';
-    for i = 1:n
-       score(i) = Uk(indices(i),:) * x;
-    end
-    [score,permutation] = sort(score, 'descend');
-    movieIDs = indices(permutation);
-end
-\end{lstlisting}
 
 %%%
 %%%

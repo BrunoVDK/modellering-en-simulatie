@@ -1,0 +1,23 @@
+function [movieIDs,score] = s0216676_predictedBestMovies(Uk,sk,Vk)
+    k = size(s20,1);
+    [m,~] = size(Uk); 
+    [n,~] = size(Vk);
+    score = zeros(n, 1)
+    for i = 1:k
+        x = ;
+        score = score + sum(Vk(:,i))
+        for j = 1:m
+            score = score + sum(x(j) * Vk(:,j));
+        end
+    end
+    for i = 1:m
+        acc = 0;
+        x = Uk(i,:) .* sk';
+        for j = 1:n
+            acc = x * Vk(j,:)' + acc;
+        end
+        score(i) = acc / n;
+    end
+    [score, movieIDs] = sort(score, 'descend');
+end
+
