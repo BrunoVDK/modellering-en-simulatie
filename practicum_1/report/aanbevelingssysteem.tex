@@ -205,7 +205,7 @@ end
 
 \fakesubsection{Opdracht 11}
 
-De \texttt{RMSE} bedraagt iets meer dan 26 :
+De \texttt{RMSE} bedraagt 0.8823 :
 
 \begin{lstlisting}
 [i,j] = find(T);
@@ -224,8 +224,8 @@ Figuur \ref{fig:op12} geeft de fout weer in functie van het aantal iteraties. De
 
 \begin{figure}[]
 \centering
-\includegraphics[width=0.7\textwidth]{res/op12.png}
-\caption{Resultaat van het algoritme voor $k=30$, toegepast op de MovieLens dataset.}
+\includegraphics[width=0.77\textwidth]{res/op12.png}
+\caption{Resultaat van het algoritme voor $k=30$, toegepast op de MovieLens dataset. De \texttt{RMSE} wordt afgebeeld in functie van het aantal iteraties.}
 \label{fig:op12}
 \end{figure}
 
@@ -277,7 +277,7 @@ end
 
 \fakesubsection{Opdracht 16}
 
-De `beste films' worden weergegeven in tabel \ref{fig:op16a} en \ref{fig:op16b}. De mediaan voor het aantal beoordelingen bedraagt respectievelijk 213 en 4412. Dus niet alleen ziet de lijst van voorspelde beste films er heel wat realistischer uit, de films hebben ook heel wat meer beoordelingen. Dat maakt de lijst betrouwbaarder.
+De `beste films' worden weergegeven in tabel \ref{fig:op16a} en \ref{fig:op16b}. De mediaan voor het aantal beoordelingen bedraagt respectievelijk 213 en 4412. Het model zorgt ervoor dat men een completer beeld kan geven. Buitenliggers (films met weinig maar hoge scores) maken daardoor minder kans geselecteerd te worden. \textit{`Winter on Fire: Ukraine's Fight for Freedom (2015)'} is daar een voorbeeld van. De lijst van voorspelde beste films ziet er dan ook heel wat realistischer uit.
 
 %%%
 %%%
@@ -285,18 +285,12 @@ De `beste films' worden weergegeven in tabel \ref{fig:op16a} en \ref{fig:op16b}.
 
 \fakesubsection{Opdracht 17}
 
-De functie werd als volgt ge\"implementeerd :
+De implementatie is als volgt :
 
 \begin{lstlisting}
 function [movieIDs,score] = s0216676_predictedBestMoviesForUser(R,Uk,sk,Vk,j)
-    [m,~] = size(R);
-    indices = setdiff(1:m,find(R))';
-    n = length(indices);
-    score = zeros(n,1);
-    x = sk .* Vk(j,:)';
-    for i = 1:n
-       score(i) = Uk(indices(i),:) * x;
-    end
+    indices = setdiff(1:size(R,1), find(R(:,j)))';
+    score = Uk(indices,:) * (sk .* Vk(j,:)');
     [score,permutation] = sort(score, 'descend');
     movieIDs = indices(permutation);
 end
@@ -491,6 +485,6 @@ Baby Driver (2017) &                          5.0000
 \label{fig:op18d}
 \end{table}
 
-\noindent Voor gebruiker 10100 worden voornamelijk Marvel films aangeraden en dat komt wel degelijk overeen met  de testmatrix. Voor gebruiker 98 komen 3 aanbevelingen overeen met diens hoogst-beoordeelde films (in matrix $T$, niet in matrix $R$). De andere films hebben een gelijkaardig genre, dus is wat aangeraden wordt best ok\'e.\\
+\noindent Voor gebruiker 10100 worden voornamelijk Marvel films aangeraden en dat komt wel degelijk overeen met  diens voorkeuren. Voor gebruiker 98 komen 3 aanbevelingen overeen met diens hoogst-beoordeelde films (in matrix $T$, niet in matrix $R$). De andere films hebben een gelijkaardig genre, dus is wat aangeraden wordt best ok\'e.\\
 
 
