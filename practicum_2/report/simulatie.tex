@@ -65,7 +65,7 @@ Men kan de parameters berekenen door eerst $\sigma$ te bepalen op basis van de r
 
 \begin{lstlisting}
 function [mu,sigma] = s0216676_estimateParameters(s)
-    rendements = log(s(2:end) ./ s(1:end-1)); % Base doesn't matter
+    rendements = log(s(2:end) ./ s(1:end-1));q
     sigma = std(rendements);
     mu = mean(rendements) + 0.5 * sigma^2;
 end
@@ -95,7 +95,7 @@ end
 
 \fakesubsection{Opdracht 6}
 
-In figuur \ref{fig:op6} worden de resulterende paden afgebeeld. Een aantal paden wijken af van de werkelijke koers afgebeeld in de opgave, maar de meesten komen realistisch over. De initi\"ele waarde bedraagt telkens 74.19 euro wat overeenstemt met de waarde in dollar op 26 november 2019.
+In figuur \ref{fig:op6} worden de resulterende paden afgebeeld. Een aantal paden wijken af van de werkelijke koers afgebeeld in de opgave, maar de meesten komen ruwweg overeen. De initi\"ele waarde bedraagt telkens 74.19 euro wat overeenstemt met de waarde in dollar op 26 november 2019.
 
 \begin{figure}[h]
 \centering
@@ -219,7 +219,26 @@ end
 
 \fakesubsection{Opdracht 11}
 
+De histogrammen staan gezamenlijk afgebeeld in figuur \ref{fig:op11} (zie volgende bladzijde) en afzonderlijk hieronder. Het rendement van de spaarrekening bedroeg ongeveer 47.22\%. Het valt op dat hoe agressiever men speelt, hoe waarschijnlijker het wordt dat men grote winsten maakt.
 
+\begin{figure}[h]
+\centering
+\subfloat[Agressief]{{\includegraphics[width=0.9\textwidth]{res/op11a.png} }}\\
+\subfloat[Gebalanceerd]{{\includegraphics[width=0.9\textwidth]{res/op11b.png} }}\\
+\subfloat[Defensief]{{\includegraphics[width=0.9\textwidth]{res/op11c.png} }}
+\caption{Afzonderlijke histogrammen gegenereerd na Monte-Carlo simulaties.}%
+\label{fig:op11sep}
+\end{figure}
+
+\newgeometry{top=1.5cm,bottom=1.5cm}
+\begin{sidewaysfigure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{res/op11.png}
+\caption{Histogram gegenereerd na het uitvoeren van de Monte-Carlo simulaties.}
+\label{fig:op11}
+\end{sidewaysfigure}
+\thispagestyle{empty}
+\restoregeometry
 
 %%%
 %%%
@@ -227,4 +246,38 @@ end
 
 \fakesubsection{Opdracht 12}
 
+In tabellen \ref{tab:op12a} en \ref{tab:op12b} worden eerst de kwantielen beschouwd (met $x=28, y=76$), vervolgens de kans op negatieve eindrendementen en ten slotte de kans op het behalen van een vermogen van 750.000 euro. Het mediaan van het vermogen bereikt op de leeftijd van 70 jaar bedroeg X, Y, Z en W euro voor de vier scenario's. Enkel XYZ zou tot het gewenste maandelijkse inkomen van 1790 euro leiden.
 
+\begin{table}[h]
+\centering
+\begin{tabular}{cc|cccccc}
+\multicolumn{1}{l}{}                       &               & 0.1\%     & 2.5\%     & 25\%      & 50\%      & 75\%      & 97.5\%    \\ \hline
+\multirow{4}{*}{\textit{n = 300}}          & Spaarrekening & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} \\
+                                           & Agressief    & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} \\
+                                           & Gebalanceerd  & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} \\
+                                           & Defensief     & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} \\ \hline
+\multirow{4}{*}{\textit{n = 12 *(70 - x)}} & Spaarrekening & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} \\
+                                           & Aggressive    & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} \\
+                                           & Gebalanceerd  & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} \\
+                                           & Defensief     & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{}
+\end{tabular}
+\caption{Kwantielen voor de 8 mogelijke scenario's.}
+\label{tab:op12a}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{cc|c|c}
+\multicolumn{1}{l}{}                       &               & $P(y<0)$     & $P(v\geq 750.000)$      \\ \hline
+\multirow{4}{*}{\textit{n = 300}}          & Spaarrekening & \textit{} & \textit{}  \\
+                                           & Agressief    & \textit{} & \textit{} \\
+                                           & Gebalanceerd  & \textit{} & \textit{} \\
+                                           & Defensief     & \textit{} & \textit{}  \\ \hline
+\multirow{4}{*}{\textit{n = 12 *(70 - x)}} & Spaarrekening & \textit{} & \textit{}  \\
+                                           & Aggressive    & \textit{} & \textit{}  \\
+                                           & Gebalanceerd  & \textit{} & \textit{} \\
+                                           & Defensief     & \textit{} & \textit{} 
+\end{tabular}
+\caption{Kans op negatieve eindrendementen en op het bereiken van een vermogen van 750.000 euro voor de 8 mogelijke scenario's.}
+\label{tab:op12b}
+\end{table}

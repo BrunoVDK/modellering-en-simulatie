@@ -65,3 +65,54 @@ plot(sum((units(2:end,:) - units(1:end-1,:)) .* P(2:end,:),2))
 title('Waarde van de incrementele investeringen');
 legend('VWRL', 'EUN5', 'Totaal', 'Location', 'NorthWest');
 grid on;
+%% Opdracht 11
+n = 600;
+rate = 2;
+priceHistory = [VWRL(end-59:end) EUN5(end-59:end)];
+alphaAggressive = ones(n,1); 
+alphaBalanced = (1 - (0:n-1)' / (2*n)).^2; 
+alphaDefensive = zeros(n,1);
+yieldSavings = s0216676_simulateSavingInvesting(300, rate, n);
+fprintf("Rendement spaarrekening = %i\n", yieldSavings);
+yieldAggressive = s0216676_simulateFundInvesting(300, priceHistory, alphaAggressive, 10000); 
+yieldBalanced = s0216676_simulateFundInvesting(300, priceHistory, alphaBalanced, 10000); 
+yieldDefensive = s0216676_simulateFundInvesting(300, priceHistory, alphaDefensive, 10000);
+figure; hold all;
+histogram(yieldAggressive, 'BinWidth', 0.5, 'Normalization', 'probability'); 
+histogram(yieldBalanced, 'BinWidth', 0.5, 'Normalization', 'probability'); 
+histogram(yieldDefensive, 'BinWidth', 0.5, 'Normalization', 'probability'); 
+legend('Agressief', 'Gebalanceerd', 'Defensief');
+%% Opdracht 12
+x = 28; y = 76; budget = 300 + y; rate = 3;
+for n = [300 12*(70-x)]
+    alphaAggressive = ones(n,1); 
+    alphaBalanced = (1 - (0:n-1)' / (2*n)).^2; 
+    alphaDefensive = zeros(n,1);
+    yieldAggressive = s0216676_simulateFundInvesting(budget, priceHistory, alphaAggressive, 10000); 
+    yieldBalanced = s0216676_simulateFundInvesting(budget, priceHistory, alphaBalanced, 10000); 
+    yieldDefensive = s0216676_simulateFundInvesting(budget, priceHistory, alphaDefensive, 10000);
+    [yieldSavings,invested,~]  = s0216676_simulateSavingInvesting(budget, rate, n);
+    capitalSavings = (1 + yieldSavings) * invested;
+    fprintf("Rendement spaarrekening = %i\n", yieldSavings);
+    fprintf("Eindvermogen spaarrekening = %i\n", capitalSavings);
+    quantileAggressive = quantile(yieldAggressive, [.01 .025 .25 .5 .75 .975]) %#ok
+    quantileBalanced = quantile(yieldBalanced, [.01 .025 .25 .5 .75 .975]) %#ok
+    quantileDefensive = quantile(yieldDefensive, [.01 .025 .25 .5 .75 .975]) %#ok
+    negativeYieldAggressive = mean(yieldAggressive < 0) %#ok
+    negativeYieldBalanced = mean(yieldBalanced < 0) %#ok
+    negativeYieldDefensive = mean(yieldDefensive < 0) %#ok
+    negativeYieldSavings = yieldSavings < 0 %#ok
+    adequateYield = 750000 / invested - 1;
+    adequateYieldAggressive = mean(yieldAggressive >= adequateYield) %#ok
+    adequateYieldBalanced = mean(yieldBalanced >= adequateYield) %#ok
+    adequateYieldDefensive = mean(yieldDefensive >= adequateYield) %#ok
+    adequateYieldSavings = capitalSavings >= 750000 %#ok
+end
+medianCapitalAggressive = invested * (1 + median(yieldAggressive)) %#ok
+medianCapitalBalanced = invested * (1 + median(yieldAggressive)) %#ok
+medianCapitalDefensive = invested * (1 + median(yieldAggressive)) %#ok
+medianCapitalSavings = capitalSavings %#ok
+caseStudyGainAggressive = medianCapitalAggressive * 0.03 / 12 %#ok
+caseStudyGainBalanced = medianCapitalBalanced * 0.03 / 12 %#ok
+caseStudyGainDefensive = medianCapitalDefensive * 0.03 / 12 %#ok
+caseStudyGainSavings = medianCapitalSavings * 0.03 / 12 %#ok

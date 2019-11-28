@@ -1,9 +1,0 @@
-function [yields,invested] = s0216676_simulateFundInvesting(budget, priceHistory, alpha, N)
-    [mu,sigma] = s0216676_estimateParameters(priceHistory(:,1));
-    for 
-    path = s0216676_simulateFundPath(priceHistory(end,1), mu, sigma, size(alpha,2));
-    budget = priceHistory(end,:);
-    [~,invested,~,~] = s0216676_simulateFundInvestingPath(budget, pricePath, alpha);
-    yields = arrayfun(@(~) s0216676_simulateFundInvestingPath(budget, pricePath, alpha), 1:N);
-end
-

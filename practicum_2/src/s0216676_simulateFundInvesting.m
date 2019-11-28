@@ -1,5 +1,5 @@
 function [yields,invested] = s0216676_simulateFundInvesting(budget, priceHistory, alpha, N)
-    months = size(alpha, 2);
+    months = size(alpha, 1);
     [mu1,sigma1] = s0216676_estimateParameters(priceHistory(:,1));
     [mu2,sigma2] = s0216676_estimateParameters(priceHistory(:,2));
     yields = 1:N;
