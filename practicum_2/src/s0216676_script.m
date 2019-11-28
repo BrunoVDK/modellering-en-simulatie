@@ -109,8 +109,8 @@ for n = [300 12*(70-x)]
     adequateYieldSavings = capitalSavings >= 750000 %#ok
 end
 medianCapitalAggressive = invested * (1 + median(yieldAggressive)) %#ok
-medianCapitalBalanced = invested * (1 + median(yieldAggressive)) %#ok
-medianCapitalDefensive = invested * (1 + median(yieldAggressive)) %#ok
+medianCapitalBalanced = invested * (1 + median(yieldBalanced)) %#ok
+medianCapitalDefensive = invested * (1 + median(yieldDefensive)) %#ok
 medianCapitalSavings = capitalSavings %#ok
 caseStudyGainAggressive = medianCapitalAggressive * 0.03 / 12 %#ok
 caseStudyGainBalanced = medianCapitalBalanced * 0.03 / 12 %#ok
