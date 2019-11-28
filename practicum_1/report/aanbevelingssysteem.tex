@@ -41,7 +41,7 @@ dan komt men uit op bijna 14 miljoen bytes. Op mijn computer was het totaal meer
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.3\textwidth]{res/op2.png}
+\includegraphics[width=0.4\textwidth]{res/op2.png}
 \caption{Geheugenverbruik voor ijle matrix $R$ en lagerangsbenadering. Het snijpunt bevindt zich in $r\approx 119$.}
 \label{fig:op2}
 \end{figure}
@@ -222,9 +222,9 @@ err = round(s0216676_RMSE(T, sparse(i,j,mu(j))), 4)
 
 Figuur \ref{fig:op12} geeft de fout weer in functie van het aantal iteraties. De volle berekening duurde ongeveer 250 seconden. De reden waarom er divergentie optreedt is dat men te maken krijgt met \textit{overfitting} (het model veralgemeent niet goed meer wanneer het de oorspronkelijke data `te goed' benadert).
 
-\begin{figure}[H]
+\begin{figure}[]
 \centering
-\includegraphics[width=0.5\textwidth]{res/op12.png}
+\includegraphics[width=0.7\textwidth]{res/op12.png}
 \caption{Resultaat van het algoritme voor $k=30$, toegepast op de MovieLens dataset.}
 \label{fig:op12}
 \end{figure}
@@ -390,10 +390,12 @@ Mediaan & 4412
 
 \fakesubsection{Opdracht 18}
 
-De resultaten worden weergegeven in tabel \ref{fig:op18a}, \ref{fig:op18b} en \ref{fig:op18c}.
+De resultaten worden weergegeven in tabel \ref{fig:op18a}, \ref{fig:op18b}, \ref{fig:op18c} en \ref{fig:op18d}.
 
 %\newgeometry{top=1.5cm,bottom=1.5cm}
 %\thispagestyle{empty}
+
+\vspace{1.5cm}
 
 \begin{table}[H]
 \centering
@@ -460,6 +462,35 @@ Kubo and the Two Strings (2016)             & 5.0000
 \label{fig:op18c}
 \end{table}
 
-\noindent Voor gebruiker 10100 worden voornamelijk Marvel films aangeraden. Voor gebruiker 98 komen 3 aanbevelingen overeen met diens hoogst-beoordeelde films (in matrix $T$, niet in matrix $R$). De andere films hebben een gelijkaardig genre, dus is wat aangeraden wordt best ok\'e.\\
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+\textbf{Beste films} & \textbf{Score} \\
+\hline
+King's Speech, The (2010) &                   5.0000 \\
+Rise of the Planet of the Apes (2011) &       5.0000 \\
+Muppets, The (2011) &                         4.5000 \\
+Dark Knight Rises, The (2012) &               5.0000 \\
+Mission: Impossible - Ghost Protocol (2011) & 5.0000 \\
+Hobbit: An Unexpected Journey, The (2012) &   5.0000 \\
+Mis\'erables, Les (2012) &                      5.0000 \\
+Star Trek Into Darkness (2013) &              5.0000 \\
+World's End, The (2013) &                     5.0000 \\
+Thor: The Dark World (2013) &                 4.5000 \\
+Hobbit: The Desolation of Smaug, The (2013) & 5.0000 \\
+Interstellar (2014) &                         5.0000 \\
+Captain America: The Winter Soldier (2014) &  5.0000 \\
+Guardians of the Galaxy (2014) &              5.0000 \\
+Big Hero 6 (2014) &                           5.0000 \\
+Deadpool (2016) &                             5.0000 \\
+Doctor Who: Last Christmas (2014) &           5.0000 \\
+Piper (2016) &                                5.0000 \\
+Baby Driver (2017) &                          5.0000 
+\end{tabular}
+\caption{Best beoordeelde films voor gebruiker 10100 (op basis van testmatrix $T$).}
+\label{fig:op18d}
+\end{table}
+
+\noindent Voor gebruiker 10100 worden voornamelijk Marvel films aangeraden en dat komt wel degelijk overeen met  de testmatrix. Voor gebruiker 98 komen 3 aanbevelingen overeen met diens hoogst-beoordeelde films (in matrix $T$, niet in matrix $R$). De andere films hebben een gelijkaardig genre, dus is wat aangeraden wordt best ok\'e.\\
 
 

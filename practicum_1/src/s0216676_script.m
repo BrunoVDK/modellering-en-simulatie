@@ -100,12 +100,14 @@ median(reviews)
 sum(reviews)
 %% Opdracht 18
 for j = [98,10100]
+    fprintf("10 beste films (voorspelling) : \n")
     [best,score] = s0216676_predictedBestMoviesForUser(R,U20,s20,V20,j);
-    fprintf("10 beste films : ")
     movieLabel(best(1:10))
     score(1:10)
-    fprintf("---------------------")
+    fprintf("---------------------\n")
+    fprintf("10 beste films (testmatrix) : \n")
+    reviews = find(T(:,j) >= 4.5);
+    movieLabel(reviews)
+    T(reviews,j)
+    fprintf("---------------------\n")
 end
-reviews = find(T(:,98) >= 4.5);
-movieLabel(reviews)
-T(reviews,98)
