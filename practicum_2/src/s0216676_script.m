@@ -32,7 +32,7 @@ fprintf("Parameters VWRL : mu = %i sigma = %i\n", mu, sigma);
 %% Opdracht 6
 figure; hold all;
 for i = 1:10
-    plot(s0216676_simulateFundPath(74.19, mu, sigma, 60)); % Converted to euros (26/11/2019)
+    plot(s0216676_simulateFundPath(82.10, mu, sigma, 60)); % (29/11/2019)
 end
 %% Opdracht 7
 [f,x] = ecdf(log(VWRL(2:end) ./ VWRL(1:end-1)));
@@ -95,6 +95,7 @@ for n = [300 12*(70-x)]
     capitalSavings = (1 + yieldSavings) * invested;
     fprintf("Rendement spaarrekening = %i\n", yieldSavings);
     fprintf("Eindvermogen spaarrekening = %i\n", capitalSavings);
+    quantileSavings = quantile(yieldSavings, [.01 .025 .25 .5 .75 .975]) %#ok
     quantileAggressive = quantile(yieldAggressive, [.01 .025 .25 .5 .75 .975]) %#ok
     quantileBalanced = quantile(yieldBalanced, [.01 .025 .25 .5 .75 .975]) %#ok
     quantileDefensive = quantile(yieldDefensive, [.01 .025 .25 .5 .75 .975]) %#ok

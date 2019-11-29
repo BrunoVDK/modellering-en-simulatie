@@ -95,7 +95,7 @@ end
 
 \fakesubsection{Opdracht 6}
 
-In figuur \ref{fig:op6} worden de resulterende paden afgebeeld. Een aantal paden wijken af van de werkelijke koers afgebeeld in de opgave, maar de meesten komen ruwweg overeen. De initi\"ele waarde bedraagt telkens 74.19 euro wat overeenstemt met de waarde in dollar op 26 november 2019.
+In figuur \ref{fig:op6} worden de resulterende paden afgebeeld. Een aantal paden wijken komen ruwweg van de werkelijke koers afgebeeld in de opgave en de ze komen allen realistisch over. De initi\"ele waarde bedraagt telkens 82.10 euro wat overeenstemt met de waarde in dollar op 29 november 2019.
 
 \begin{figure}[h]
 \centering
@@ -107,7 +107,7 @@ In figuur \ref{fig:op6} worden de resulterende paden afgebeeld. Een aantal paden
 \begin{lstlisting}
 figure; hold all;
 for i = 1:10
-    plot(s0216676_simulateFundPath(74.19, mu, sigma, 60)); % Converted to euros (26/11/2019)
+    plot(s0216676_simulateFundPath(82.10, mu, sigma, 60)); % (29/11/2019)
 end
 \end{lstlisting}
 
@@ -252,11 +252,11 @@ In tabellen \ref{tab:op12a} en \ref{tab:op12b} worden eerst de kwantielen bescho
 \centering
 \begin{tabular}{cc|cccccc}
 \multicolumn{1}{l}{}                       &               & 0.1\%     & 2.5\%     & 25\%      & 50\%      & 75\%      & 97.5\%    \\ \hline
-\multirow{4}{*}{\textit{n = 300}}          & Spaarrekening & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} \\
+\multirow{4}{*}{\textit{n = 300}}          & Spaarrekening & 0.3528 & 0.3528 & 0.3528 & 0.3528 & 0.3528 & 0.3528 \\
                                            & Agressief    & 0.0594 & 0.2239 & 1.0057 & 1.6295 & 2.5004 & 5.1955 \\
                                            & Gebalanceerd  & 0.2826 & 0.4080 & 1.0486 & 1.5445 & 2.2071 & 4.3076 \\
                                            & Defensief     & -0.1099 & 0.0196 & 0.6483 & 1.1841 & 1.9159 & 4.1599 \\ \hline
-\multirow{4}{*}{\textit{n = 12 *(70 - x)}} & Spaarrekening & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} & \textit{} \\
+\multirow{4}{*}{\textit{n = 12 *(70 - x)}} & Spaarrekening & 0.6449 & 0.6449 & 0.6449 & 0.6449 & 0.6449 & 0.6449\\
                                            & Aggressive    & 0.5868 & 0.9126 & 2.7824 & 4.5118 & 7.2536 & 17.2040 \\
                                            & Gebalanceerd  & 0.9435 & 1.2371 & 2.8345 & 4.2806 & 6.4681 &14.1306 \\
                                            & Defensief     & 0.1593 & 0.3652 & 1.6187 & 2.8435 & 4.7228 & 11.2958
