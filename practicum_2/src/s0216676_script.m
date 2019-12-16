@@ -38,7 +38,7 @@ end
 [f,x] = ecdf(log(VWRL(2:end) ./ VWRL(1:end-1)));
 [f_norm] = normcdf(x, mu, sigma);
 figure; hold all;
-plot(x, f, x,f_norm);
+plot(x, f, x, f_norm);
 legend('Log-Rendementen', 'Model', 'Location', 'NorthWest');
 %% Opdracht 9 
 % (a)

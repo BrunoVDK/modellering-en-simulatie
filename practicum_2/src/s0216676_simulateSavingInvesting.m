@@ -7,6 +7,7 @@ function [yield, invested, value] = s0216676_simulateSavingInvesting(budget, rat
     	value(j) = value(j) + (win - 0.15 * (win > 980) * (win - 980));
         value(j-12:j) = cumsum(value(j-12:j)); % Accumulate sums
     end
+    if months < 13 ; j = 1; end
     value(j:end) = cumsum(value(j:end));
     yield = value(end) / invested - 1;
 end
